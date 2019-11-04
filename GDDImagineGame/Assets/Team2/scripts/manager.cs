@@ -9,7 +9,12 @@ public class manager : MonoBehaviour
     private float timer = 0.0f;
     //public var for how long a "round" should be (time when players can choose an action)
     public float timeToChoose = 0.0f;
-    
+    //public vars for managing the 4 players
+    public GameObject player1;
+    public GameObject player2;
+    public GameObject player3;
+    public GameObject player4;
+
     // Start is called before the first frame update
     void Start()
     {
