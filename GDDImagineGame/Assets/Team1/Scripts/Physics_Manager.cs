@@ -17,7 +17,10 @@ public class Physics_Manager : MonoBehaviour
         
     }
 
-    
+    /// <summary>
+    /// applies gravity to active darts
+    /// </summary>
+    /// <param name="d">the dart to which you are applyng gravity</param>
     public void ApplyGravity(Dart d)
     {
         d.VelocityY -= gravity;

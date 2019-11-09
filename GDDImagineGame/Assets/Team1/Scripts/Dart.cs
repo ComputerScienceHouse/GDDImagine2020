@@ -38,6 +38,11 @@ public class Dart : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// called upon creation of the dart to initialize its velocity
+    /// </summary>
+    /// <param name="power">the strength with which the dart is thrown</param>
+    /// <param name="angle">the direction the dart is thrown in</param>
     public void Throw(float power, float angle)
     {
 
