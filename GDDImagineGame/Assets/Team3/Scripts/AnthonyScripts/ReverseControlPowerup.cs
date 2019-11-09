@@ -16,6 +16,8 @@ public class ReverseControlPowerup : Collidable
             other.GetComponent<Movement>().multiplier *= -1;
             isActive = true;
             timeLeft = 2;
+            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<Collider>().enabled = false;
         }
     }
 

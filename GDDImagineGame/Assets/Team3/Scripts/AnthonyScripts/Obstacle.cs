@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class Obstacle : Collidable
 {
-
     public override void OnCollide(GameObject other)
     {
-        GameObject.Find("Player").GetComponent<CharacterController>().score -= 1;
-        GameObject.Find("PointText").GetComponent<Text>().text = "Score: " + GameObject.Find("Player").GetComponent<CharacterController>().score;
+        if (other.tag == "Player")
+        {
+            if (GameObject.Find("Immune").GetComponent<ImmunePowerup>().isActive == false)
+            {
+                if (other.GetComponent<Movement>().Score > 0)
+                    gameManager.SubtractPoints(other, 1);
+            }
+        }
     }
-
 }
