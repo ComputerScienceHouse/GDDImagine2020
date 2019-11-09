@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("player");
+        players = GameObject.FindGameObjectsWithTag("Player");
         collidables = new List<GameObject>();
     }
 
@@ -29,33 +29,33 @@ public class GameManager : MonoBehaviour
     // point management
     void AddPoints(GameObject player, int score)
     {
-       // player.score += score;
+       player.GetComponent<Movement>().Score += score;
     }
 
     void SubtractPoints(GameObject player, int score)
     {
-       // player.score -= score;
+        player.GetComponent<Movement>().Score -= score;
     }
 
     void DisplayPoints()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             
 
             if (can.gameObject.transform.GetChild(i).name == "Player1Txt")
             {
-                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 1: 1";
+                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 1: " + players[i].GetComponent<Movement>().Score;
 
             } else if (can.gameObject.transform.GetChild(i).name == "Player2Txt")
             {
-                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 2: 1";
+                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 2: " + players[i].GetComponent<Movement>().Score;
             } else if (can.gameObject.transform.GetChild(i).name == "Player3Txt")
             {
-                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 3: 1";
+                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 3: " + players[i].GetComponent<Movement>().Score;
             } else
             {
-                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 4: 1";
+                can.gameObject.transform.GetChild(i).GetComponent<Text>().text = "Player 4: " + players[i].GetComponent<Movement>().Score;
             }
         }
     }
