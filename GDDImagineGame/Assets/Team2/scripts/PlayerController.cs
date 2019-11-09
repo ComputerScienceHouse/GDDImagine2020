@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public KeyCode stealAcross;
     public KeyCode stealRight;
 
+	// Animation
+	public bool animating;
+
     void Start()
     {
         //initialize some vars
@@ -36,7 +39,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        PlayerAction();
+		// If this player is animating, animate
+		if (animating)
+		{
+			animating = false;
+		}
+
+		// Otherwise, read input
+		else
+		{
+			PlayerAction();
+		}
+        
     }
 
 	///
@@ -80,4 +94,34 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+	//helper function for a successful pot steal animation
+	public void PlayerMoveToPotSuccessFul()
+	{
+		animating = true;
+	}
+
+	//helper function for a unsuccessful pot steal animation
+	public void PlayerMoveToPotUnsuccessFul()
+	{
+		animating = true;
+	}
+
+	//helper function for a unsuccessful pot steal animation
+	public void PlayerMoveToStealSuccessFul(float degreesToRotate)
+	{
+		animating = true;
+	}
+
+	//helper function for a unsuccessful pot steal animation
+	public void PlayerMoveToStealUnsuccessFul(float degreesToRotate)
+	{
+		animating = true;
+	}
+
+	//helper function for a block animation
+	public void PlayerMoveToBlock()
+	{
+		animating = true;
+	}
 }
