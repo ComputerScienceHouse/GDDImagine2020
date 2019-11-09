@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class manager : MonoBehaviour
 {
 
     //private var for keeping track of the time
-    private float timer = 0.0f;
+    public float timer = 0.0f;
+
+    //vars for updating the timer UI
+    //public TextMeshProUGUI timerText;
+    //public GameObject textObject;
+
     //public var for how long a "round" should be (time when players can choose an action)
-    public float timeToChoose = 0.0f;
+    public float timeToChoose;
     //public vars for managing the 4 players
     public GameObject player1;
     public GameObject player2;
@@ -24,19 +30,29 @@ public class manager : MonoBehaviour
     private int roundNum;
     private bool gameOver;
 
-    private PlayerController [] players;
+    //var for checking if players are animating after a round has been calculated
+    private bool playersAnimating;
+
+    private PlayerController[] players;
 
     // Start is called before the first frame update
     void Start()
     {
+        //initialize some vars
         players = new PlayerController[] { player1.GetComponent<PlayerController>(), player2.GetComponent<PlayerController>(), player3.GetComponent<PlayerController>(), player4.GetComponent<PlayerController>() };
         roundNum = 1;
         gameOver = false;
+        playersAnimating = false;
+        //timerText = textObject.GetComponent<TextMeshProUGUI>();
+        //timerText.SetText("Timer: " + timeToChoose);
     }
 
     // Update is called once per frame
     void Update()
     {
+        ////make sure animations aren't happening at the moment
+        //if (!players[0].animating && !players[1].animating && !players[2].animating && !players[3].animating)
+        //{
         //check to see if time is up for picking an action
         if (timer >= timeToChoose && !gameOver)
         {
@@ -61,26 +77,70 @@ public class manager : MonoBehaviour
                     potPlayerNum = i;
                 }
                 //handle steals
-                else if (choices[i] == Choice.steal)
+                else if (choices[i] == Choice.stealLeft || choices[i] == Choice.stealAcross || choices[i] == Choice.stealRight)
                 {
-                    //ignore if the next player over is blocking, otherwise give half of score to player stealing
-                    if(choices[(i + 1) % 4] != Choice.block)
+                    int target = -1;
+                    float degreesToRotate = 0;
+                    switch (choices[i])
                     {
-                        int half = (int)Mathf.Ceil(players[(i + 1) % 4].score / 2);
+                        case Choice.stealLeft:
+                            target = (i - 1) % 4;
+                            degreesToRotate = -90;
+                            break;
+                        case Choice.stealAcross:
+                            target = (i + 2) % 4;
+                            degreesToRotate = 180;
+                            break;
+                        case Choice.stealRight:
+                            target = (i + 1) % 4;
+                            degreesToRotate = 90;
+                            break;
+                        default:
+                            break;
+                    }
+                    //ignore if the chosen player is blocking, otherwise give half of score to player stealing
+                    if (choices[target] != Choice.block)
+                    {
+                        int half = (int)Mathf.Ceil(players[target].score / 2);
+                        //players[i].PlayerMoveToStealSuccessFul(degreesToRotate);
                         players[i].score += half;
-                        players[(i + 1) % 4].score -= half;
+                        players[target].score -= half;
+                    }
+                    else
+                    {
+                        //players[i].PlayerMoveToStealUnsuccessFul(degreesToRotate);
                     }
                 }
             }
             //if only 1 going for pot, give them pot value
-            if(potNum == 1)
+            if (potNum == 1)
             {
+                //players[potPlayerNum].PlayerMoveToPotSuccessFul();
+                //players[potPlayerNum].animating = true;
                 players[potPlayerNum].score += potValue;
+            }
+            else if (potNum > 1)
+            {
+                foreach (PlayerController pc in players)
+                {
+                    if (pc.choice == Choice.pot)
+                    {
+                        //pc.PlayerMoveToPotUnsuccessFul();
+                    }
+                }
+            }
+
+            foreach (PlayerController pc in players)
+            {
+                if (pc.choice == Choice.block)
+                {
+                    //pc.PlayerMoveToBlock();
+                }
             }
 
             //After resolving choices and updating scores, check to see if the game would end here
             //reset players choices and give them some pity money
-            foreach(PlayerController pc in players)
+            foreach (PlayerController pc in players)
             {
                 pc.choice = Choice.none;
                 pc.score += 1;
@@ -93,13 +153,13 @@ public class manager : MonoBehaviour
             roundNum++;
 
             //ends the game if max rounds reached
-            if(roundNum >= numRounds)
+            if (roundNum >= numRounds)
             {
                 int highScorePlayer = -1;
                 int highScore = 0;
                 for (int i = 0; i < players.Length; i++)
                 {
-                    if(players[i].score > highScore)
+                    if (players[i].score > highScore)
                     {
                         highScore = players[i].score;
                         highScorePlayer = i;
@@ -113,11 +173,8 @@ public class manager : MonoBehaviour
         else //default case, increment
         {
             timer += Time.deltaTime;
-            /*
-             Code for listening to player input and preventing them from making another choice would go here
-             Use public game objects that can be set to specific object instances in the unity editor
-             to set the variables that would be checked here
-             */
+            //timerText.SetText("Timer: " + Mathf.Round((timeToChoose - timer)*100)/100);
         }
+        //}
     }
 }
