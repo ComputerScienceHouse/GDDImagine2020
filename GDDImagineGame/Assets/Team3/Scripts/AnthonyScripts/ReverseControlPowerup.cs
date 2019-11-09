@@ -26,12 +26,17 @@ public class ReverseControlPowerup : Collidable
         if (isActive == true)
         {
             timeLeft -= Time.deltaTime;
+            if (activePlayer.GetComponent<Movement>().multiplier > 0)
+            {
+                activePlayer.GetComponent<Movement>().multiplier *= -1;
+            }
             if (timeLeft <= 0)
             {
                 activePlayer.GetComponent<Movement>().multiplier *= -1;
                 isActive = false;
                 timeLeft = 2;
             }
+            
         }
     }
 }
