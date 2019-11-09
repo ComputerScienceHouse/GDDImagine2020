@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 	// Player's current score
     public int score;
 
-	// Player's action for this round
+	// Player's action for any given round
     public Choice choice;
 
 	// The keys this player must press to perform various actions
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //initialize some vars
+        // Initialize player vars
         score = 0;
         choice = Choice.None;
     }
@@ -44,16 +44,16 @@ public class PlayerController : MonoBehaviour
 	///
 	public void PlayerAction()
     {
-        //only let player make choice if none have been made yet
+        // Only let player make choice if none has been made yet
         if (choice == Choice.None)
         {
-            //player wants to go for pot
+            // Player wants to go for pot
             if (Input.GetKeyDown(potButton))
             {
                 Debug.Log(name + " is going for main pot");
                 choice = Choice.Pot;
             }
-            //player wants to go for a steal, handle who they're trying to steal from
+            // Player wants to go for a steal, handle who they're trying to steal from
             else if (Input.GetKey(stealButton))
             {
                 if (Input.GetKeyDown(stealLeft))
@@ -72,10 +72,10 @@ public class PlayerController : MonoBehaviour
                     choice = Choice.StealRight;
                 }
             }
-            //player wants to block
+            // Player wants to block
             else if (Input.GetKeyDown(blockButton))
             {
-                Debug.Log(name + " is going for blocking");
+                Debug.Log(name + " is blocking");
                 choice = Choice.Block;
             }
         }

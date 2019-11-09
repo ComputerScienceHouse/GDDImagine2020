@@ -105,3 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6443632a6d5aeba4c96a823bed9abb34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  choice: 5
+  potButton: 0
+  stealButton: 0
+  blockButton: 0
+  stealLeft: 0
+  stealAcross: 0
+  stealRight: 0
