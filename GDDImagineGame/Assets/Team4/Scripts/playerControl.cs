@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FixRaycastsControl : MonoBehaviour
+public class playerControl : MonoBehaviour
 {
     [SerializeField]
     private float speed;
@@ -27,8 +27,8 @@ public class FixRaycastsControl : MonoBehaviour
 
         float move = speed * Time.deltaTime;
 
-        float moveHorizontal = Input.GetAxisRaw("LeftJoystickX");
-        float moveVertical = Input.GetAxisRaw("LeftJoystickY");
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
 
         //transform.position = Vector3.MoveTowards(transform.position, tf.position, move); // Smooth camera movements
 
