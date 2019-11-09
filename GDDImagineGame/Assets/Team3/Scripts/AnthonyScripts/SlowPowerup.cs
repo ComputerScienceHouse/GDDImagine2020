@@ -16,6 +16,8 @@ public class SlowPowerup : Collidable
             other.GetComponent<Movement>().multiplier = 5;
             isActive = true;
             timeLeft = 2;
+            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -29,6 +31,7 @@ public class SlowPowerup : Collidable
                 activePlayer.GetComponent<Movement>().multiplier = 10;
                 isActive = false;
                 timeLeft = 2;
+                
             }
         }
     }

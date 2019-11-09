@@ -16,6 +16,8 @@ public class SpeedPowerup : Collidable
             other.GetComponent<Movement>().multiplier = 20;
             isActive = true;
             timeLeft = 2;
+            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<Collider>().enabled = false;
         }
     }
 

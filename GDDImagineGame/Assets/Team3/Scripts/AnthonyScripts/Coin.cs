@@ -9,7 +9,16 @@ public class Coin : Collidable
     {
         if (other.tag == "Player")
         {
-            gameManager.AddPoints(other, 1);
+            if (GameObject.Find("DoubleCoins").GetComponent<DoubleCoinsPowerup>().isActive == true)
+            {
+                gameManager.AddPoints(other, 2);
+            }
+            else
+            {
+                gameManager.AddPoints(other, 1);
+            }
+            
         }
+        Destroy(gameObject);
     }
 }
