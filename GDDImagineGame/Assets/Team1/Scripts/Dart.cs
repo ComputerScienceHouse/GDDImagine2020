@@ -4,32 +4,23 @@ using UnityEngine;
 
 public class Dart : MonoBehaviour
 {
-    private float velocityX;
-    private float velocityY;
+    private Vector3 velocity;
+    private GameObject body;
+    private Player thrower;
 
-    public float VelocityX
+    public Player Thrower
     {
         get
         {
-            return velocityX;
+            return thrower;
         }
     }
 
-    public float VelocityY
-    {
-        get
-        {
-            return velocityY;
-        }
-        set
-        {
-            velocityY = value;
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        body = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        body.SetActive(true);
     }
 
     // Update is called once per frame
@@ -39,12 +30,14 @@ public class Dart : MonoBehaviour
     }
 
     /// <summary>
-    /// called upon creation of the dart to initialize its velocity
+    /// Throws the dart upon the player's command
     /// </summary>
-    /// <param name="power">the strength with which the dart is thrown</param>
-    /// <param name="angle">the direction the dart is thrown in</param>
-    public void Throw(float power, float angle)
+    /// <param name="xVal">the X Value of the dart's velocity</param>
+    /// <param name="yVal">the Y Value of the dart's velocity</param>
+    /// <param name="player">the player that threw the dart</param>
+    public void Throw(float xVal, float yVal, Player player)
     {
-
+        velocity = new Vector3(xVal, yVal, 0);
+        thrower = player;
     }
 }
