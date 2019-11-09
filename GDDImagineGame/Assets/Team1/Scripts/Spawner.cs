@@ -5,6 +5,11 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject balloon;
+
+    /// <summary>
+    /// Number of frames in between the spawning of balloon waves
+    /// </summary>
+    public int spawnRate;
     List<GameObject> balloonList;
     Vector3 spawnPoint;
     // Start is called before the first frame update
@@ -18,7 +23,7 @@ public class Spawner : MonoBehaviour
     void Update()
     {
         // Ensures balloons are spawned every 100 Frames
-        if (Time.frameCount % 100 == 0)
+        if (Time.frameCount % spawnRate == 0)
         {
             for (int i = 0; i < 10; i++)
             {

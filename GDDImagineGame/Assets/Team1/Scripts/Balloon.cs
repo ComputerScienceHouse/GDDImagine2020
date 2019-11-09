@@ -6,9 +6,20 @@ public class Balloon : MonoBehaviour
 {
     Material material;
     int points;
+    /// <summary>
+    /// Lesser bound of balloon speed value (default: .01f)
+    /// </summary>
+    public float lowerSpeedRange;
+    /// <summary>
+    /// Upper bound of balloon speed value (default: .05f)
+    /// </summary>
+    public float upperSpeedRange;
     private float balloonSpeed;
+    private float tempBalloonSpeed;
+    private RaycastHit hit;
     CollisionManager cManage;
     GameObject temp; //Placeholder
+    //Collision collision;
 
     public float BalloonSpeed
     {
@@ -20,9 +31,9 @@ public class Balloon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        balloonSpeed = Random.Range(.01f, .05f);
+        balloonSpeed = Random.Range(lowerSpeedRange, upperSpeedRange);
         
-        material = gameObject.GetComponent<Renderer>().material;
+        //material = gameObject.GetComponent<Renderer>().material;
         int randColor = Random.Range(1, 4);
         switch (randColor)
         {
@@ -37,6 +48,7 @@ public class Balloon : MonoBehaviour
                 break;
 
         }
+        gameObject.GetComponent<Renderer>().material = material;
         points = 100;
         cManage = FindObjectOfType<CollisionManager>();
     }
@@ -44,8 +56,10 @@ public class Balloon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         BalloonMoveDown();
+        CheckBalloonRaycast();
+        //BalloonCollision(collision);
         //if (cManage.AABBCollision(gameObject, temp))
         //{
         //    deleteObject();
@@ -64,7 +78,29 @@ public class Balloon : MonoBehaviour
         transform.position = new Vector3(transform.position.x, (transform.position.y - balloonSpeed));
     }
 
-    
+    void CheckBalloonRaycast()
+    {
+        Debug.DrawRay(transform.position, Vector3.down, Color.red, .5f);
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, .5f))
+        {
+            if (hit.collider.tag == "Balloon")
+            {
+                tempBalloonSpeed = hit.collider.gameObject.GetComponent<Balloon>().BalloonSpeed;
+                hit.collider.gameObject.GetComponent<Balloon>().BalloonSpeed = balloonSpeed;
+                balloonSpeed = tempBalloonSpeed;
+            }
+        }
+    }
+
+   //void BalloonCollision(Collision col)
+   //{
+   //    if (col.gameObject.tag == "Balloon")
+   //    {
+   //        tempBalloonSpeed = col.gameObject.GetComponent<Balloon>().BalloonSpeed;
+   //        col.gameObject.GetComponent<Balloon>().BalloonSpeed = balloonSpeed;
+   //        balloonSpeed = tempBalloonSpeed;
+   //    }
+   //}
 
     void deleteObject()
     {

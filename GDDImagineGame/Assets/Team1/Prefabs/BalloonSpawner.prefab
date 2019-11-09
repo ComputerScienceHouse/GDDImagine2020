@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balloon: {fileID: 5667901705260687809, guid: 43b8a10bb65bad344aefc1585b8bcb4c, type: 3}
+  spawnRate: 100
