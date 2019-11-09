@@ -6,6 +6,7 @@ public class CharacterController : MonoBehaviour
 {
     Rigidbody rb;
     float multiplier = 10, maxJumpVelocity = 5;
+    public int score = 0;
     bool isFalling = false;
 
     // Start is called before the first frame update
