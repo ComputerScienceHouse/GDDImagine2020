@@ -6,6 +6,12 @@ public class Manager : MonoBehaviour
 	// Provides access to all four players
 	public PlayerController[] players;
 
+    // Provides access to the coin piles of the four players
+    public GameObject[] coinPiles;
+
+    // Provides access to the main "pot" (dragon horde, w/e)
+    public GameObject pot;
+
 	// The Text object that displays the time remaining in the round
 	public Text timerText;
 
@@ -29,7 +35,10 @@ public class Manager : MonoBehaviour
 
 	// Keeps track of elapsed game time
 	private float timer;
-	
+
+    // Amount to scale a pile by
+    private float pileScale;
+
     void Start()
     {
 		timer = 0;
@@ -79,39 +88,43 @@ public class Manager : MonoBehaviour
 					switch (choices[i])
 					{
 						case Choice.StealLeft:
-							target = (i - 1) % 4;
+							target = ((i - 1) % 4 + 4) % 4;
 							break;
 						case Choice.StealAcross:
-							target = (i + 2) % 4;
+							target = ((i + 2) % 4 + 4) % 4;
 							break;
 						case Choice.StealRight:
-							target = (i + 1) % 4;
+							target = ((i + 1) % 4 + 4) % 4;
 							break;
 					}
-
-					//ignore if the chosen player is blocking, otherwise give half of score to player stealing
+					// Ignore if the chosen player is blocking, otherwise give half of score to player stealing
 					if (choices[target] != Choice.Block)
 					{
 						int half = (int)Mathf.Ceil(players[target].score / 2);
 						players[i].score += half;
-						players[target].score -= half;
-					}
-				}
+                        players[target].score -= half;
+                        pileScale = (float)(half * 0.1);
+                        coinPiles[i].transform.localScale += new Vector3(pileScale, pileScale, pileScale);
+                        coinPiles[target].transform.localScale -= new Vector3(pileScale, pileScale, pileScale);
+                    }
+                }
 			}
 
 			// Only one player went for the pot, give them pot value
 			if (potNum == 1)
 			{
 				players[potPlayerNum].score += potValue;
-			}
+                pileScale = (float)(potValue * 0.1);
+                coinPiles[potPlayerNum].transform.localScale += new Vector3(pileScale, pileScale, pileScale);
+            }
 
-			//After resolving choices and updating scores, check to see if the game would end here
-			//reset players choices and give them some pity money
-			foreach (PlayerController pc in players)
+            // Reset players choices and give them some pity money
+            for (int i = 0; i < players.Length; i++)
 			{
-				pc.choice = Choice.None;
-				pc.score += 1;
-				Debug.Log(pc.name + "'s score is: " + pc.score);
+				players[i].choice = Choice.None;
+				players[i].score += 1;
+                coinPiles[i].transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+				Debug.Log(players[i].name + "'s score is: " + players[i].score);
 			}
 
 			// Increase round number
@@ -124,11 +137,13 @@ public class Manager : MonoBehaviour
 				return;
 			}
 
-			// Increase pot value
+			// Increase pot value and size
 			potValue += potIncrease;
+            pileScale = (float)(potIncrease * 0.1);
+            pot.transform.localScale += new Vector3(pileScale, pileScale, pileScale);
 
-			// Reset timer
-			timer = 0.0f;
+            // Reset timer
+            timer = 0.0f;
 		}
     }
 
