@@ -571,11 +571,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e384338ca4fe843882191cb4960a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToChoose: 0
+  timeToChoose: 5
   player1: {fileID: 2026101235}
   player2: {fileID: 1522733016}
   player3: {fileID: 1175170418}
   player4: {fileID: 64169714}
+  potValue: 10
+  potIncrease: 5
+  numRounds: 5
 --- !u!4 &1082955456
 Transform:
   m_ObjectHideFlags: 0
@@ -743,6 +746,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: potButton
+      value: 113
+      objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: stealButton
+      value: 119
+      objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: blockButton
+      value: 101
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82734d121651e644081af68b67e6b645, type: 3}

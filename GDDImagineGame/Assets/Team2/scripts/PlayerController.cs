@@ -2,12 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Choice
+{
+    pot,
+    steal,
+    block,
+    none
+}
+
 public class PlayerController : MonoBehaviour
 {
+
+    public int score;
+    public Choice choice;
+    public KeyCode potButton;
+    public KeyCode stealButton;
+    public KeyCode blockButton;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        score = 0;
+        choice = Choice.none;
     }
 
     // Update is called once per frame
@@ -21,17 +37,23 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerAction()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (choice == Choice.none)
         {
-            Debug.Log("Go For Main Pot");
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log("Steal");
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Debug.Log("Block");
+            if (Input.GetKeyDown(potButton))
+            {
+                Debug.Log(name + " is going for main pot");
+                choice = Choice.pot;
+            }
+            else if (Input.GetKeyDown(stealButton))
+            {
+                Debug.Log(name + " is stealing");
+                choice = Choice.steal;
+            }
+            else if (Input.GetKeyDown(blockButton))
+            {
+                Debug.Log(name + " is going for blocking");
+                choice = Choice.block;
+            }
         }
     }
 }
