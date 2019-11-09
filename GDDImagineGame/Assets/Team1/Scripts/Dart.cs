@@ -13,6 +13,7 @@ public class Dart : MonoBehaviour
         get
         {
             return thrower;
+
         }
     }
 
