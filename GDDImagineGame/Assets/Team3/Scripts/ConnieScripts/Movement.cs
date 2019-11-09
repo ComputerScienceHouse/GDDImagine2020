@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour
         }
         set
         {
-            score += value;
+            score = value;
         }
     }
 

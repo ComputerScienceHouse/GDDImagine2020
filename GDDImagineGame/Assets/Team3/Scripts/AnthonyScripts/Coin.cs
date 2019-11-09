@@ -7,6 +7,9 @@ public class Coin : Collidable
 {
     public override void OnCollide(GameObject other)
     {
-        gameManager.AddPoin
+        if (other.tag == "Player")
+        {
+            gameManager.AddPoints(other, 1);
+        }
     }
 }
