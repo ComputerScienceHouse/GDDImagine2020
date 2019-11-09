@@ -1,20 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
-public class manager : MonoBehaviour
+public class Manager : MonoBehaviour
 {
 
     //private var for keeping track of the time
     public float timer = 0.0f;
 
-    //vars for updating the timer UI
-    //public TextMeshProUGUI timerText;
-    //public GameObject textObject;
+	// The Text object that displays the time remaining in the round
+	public Text timerText;
 
     //public var for how long a "round" should be (time when players can choose an action)
     public float timeToChoose;
+
     //public vars for managing the 4 players
     public GameObject player1;
     public GameObject player2;
@@ -43,8 +43,6 @@ public class manager : MonoBehaviour
         roundNum = 1;
         gameOver = false;
         playersAnimating = false;
-        //timerText = textObject.GetComponent<TextMeshProUGUI>();
-        //timerText.SetText("Timer: " + timeToChoose);
     }
 
     // Update is called once per frame
@@ -173,7 +171,7 @@ public class manager : MonoBehaviour
         else //default case, increment
         {
             timer += Time.deltaTime;
-            //timerText.SetText("Timer: " + Mathf.Round((timeToChoose - timer)*100)/100);
+			timerText.text = "Timer: " + Mathf.Round((timeToChoose - timer) * 100) / 100;
         }
         //}
     }
