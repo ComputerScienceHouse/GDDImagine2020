@@ -22,17 +22,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, cam.transform.position.z + 1);
+        float camSpeed = .2F;
+        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, cam.transform.position.z + camSpeed);
         DisplayPoints();
     }
 
     // point management
-    void AddPoints(GameObject player, int score)
+    public void AddPoints(GameObject player, int score)
     {
        player.GetComponent<Movement>().Score += score;
     }
 
-    void SubtractPoints(GameObject player, int score)
+    public void SubtractPoints(GameObject player, int score)
     {
         player.GetComponent<Movement>().Score -= score;
     }
