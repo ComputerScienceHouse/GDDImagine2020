@@ -41,13 +41,13 @@ public class Movement : MonoBehaviour
     }
     void Update()
     {
-        rb.velocity = new Vector3(Input.GetAxis("Horizontal" + controller.ToString()) * multiplier,
-            rb.velocity.y, Input.GetAxis("Vertical" + controller.ToString()) * multiplier);
+        rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * multiplier,
+            rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * multiplier);
 
 
         if (!isFalling && IsGrounded())
         {
-            rb.AddForce(new Vector3(0, Input.GetAxis("Jump" + controller.ToString()) * 50, 0));
+            rb.AddForce(new Vector3(0, Input.GetAxis("Player" + controller + "-A") * 50 * rb.mass, 0));
         }
 
         if(rb.velocity.y >= maxJumpVelocity && !isFalling)
@@ -60,12 +60,12 @@ public class Movement : MonoBehaviour
         }
 
         //cease movement if no input
-        if (Input.GetAxis("Vertical" + controller.ToString()) == 0)
+        if (Input.GetAxis("Player" + controller + "-LeftJoy-Y") == 0)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         }
 
-        if (Input.GetAxis("Horizontal1" + controller.ToString()) == 0)
+        if (Input.GetAxis("Player" + controller + "-LeftJoy-X") == 0)
         {
             rb.velocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
         }
