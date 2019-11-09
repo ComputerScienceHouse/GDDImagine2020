@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public float maxPower;
     public float powerIncrement;
     bool powerUpDown;
+    public GameObject dartPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,5 +52,10 @@ public class Player : MonoBehaviour
         angle = (Mathf.Atan2(-mouseWorldPos.x, mouseWorldPos.y) * Mathf.Rad2Deg);
         //print(angle);
         arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    void spawnDart()
+    {
+        Instantiate(dartPrefab, gameObject.transform.position, Quaternion.identity);
     }
 }

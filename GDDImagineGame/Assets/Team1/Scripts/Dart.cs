@@ -5,7 +5,7 @@ using UnityEngine;
 public class Dart : MonoBehaviour
 {
     private Vector3 velocity;
-    private GameObject body;
+    public GameObject player;
     private Player thrower;
 
     public Player Thrower
@@ -13,21 +13,21 @@ public class Dart : MonoBehaviour
         get
         {
             return thrower;
-
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        body = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        body.SetActive(true);
+        player = GameObject.FindGameObjectWithTag("player");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //transform.Translate(velocity);
+       gameObject.transform.Translate(velocity);
     }
 
     /// <summary>
