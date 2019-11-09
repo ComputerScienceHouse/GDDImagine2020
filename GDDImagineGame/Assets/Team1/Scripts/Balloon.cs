@@ -6,11 +6,22 @@ public class Balloon : MonoBehaviour
 {
     Material material;
     int points;
+    private float balloonSpeed;
     CollisionManager cManage;
     GameObject temp; //Placeholder
+
+    public float BalloonSpeed
+    {
+        get{ return balloonSpeed;}
+        set { balloonSpeed = value; }
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
+        balloonSpeed = Random.Range(.01f, .05f);
+        
         material = gameObject.GetComponent<Renderer>().material;
         int randColor = Random.Range(1, 4);
         switch (randColor)
@@ -33,7 +44,8 @@ public class Balloon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        BalloonMoveDown();
         //if (cManage.AABBCollision(gameObject, temp))
         //{
         //    deleteObject();
@@ -43,6 +55,16 @@ public class Balloon : MonoBehaviour
             deleteObject();
         }
     }
+
+    /// <summary>
+    /// Will Move the Balloons down at a random speed
+    /// </summary>
+    void BalloonMoveDown()
+    {
+        transform.position = new Vector3(transform.position.x, (transform.position.y - balloonSpeed));
+    }
+
+    
 
     void deleteObject()
     {

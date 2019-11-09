@@ -16,16 +16,19 @@ public class Spawner : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        
-        for (int i = 0; i < 10; i++)
+    {
+        // Ensures balloons are spawned every 100 Frames
+        if (Time.frameCount % 100 == 0)
         {
-            if (spawnPoint.x > 10)
+            for (int i = 0; i < 10; i++)
             {
-                spawnPoint = new Vector3(-10, 10, 0);
+                if (spawnPoint.x > 10)
+                {
+                    spawnPoint = new Vector3(-10, 10, 0);
+                }
+                balloonList.Add(GameObject.Instantiate(balloon, spawnPoint, Quaternion.identity));
+                spawnPoint = new Vector3(spawnPoint.x + 1, spawnPoint.y, 0);
             }
-            balloonList.Add(GameObject.Instantiate(balloon, spawnPoint, Quaternion.identity));
-            spawnPoint = new Vector3(spawnPoint.x + 1, spawnPoint.y, 0);
         }
     }
 }
