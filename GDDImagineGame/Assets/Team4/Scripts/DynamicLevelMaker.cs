@@ -56,11 +56,11 @@ public class DynamicLevelMaker : MonoBehaviour
                             break;
                         // Add an enemy to the game
                         case 'E':
-                            objects[i, j] = Instantiate(EnemyPrefab, new Vector3(scale * i, 0.5f, scale * j), Quaternion.identity);
+                            objects[i, j] = Instantiate(EnemyPrefab, new Vector3((scale * i) + offset, 0.5f, (scale * j) + offset), Quaternion.identity);
                             break;
                         // Add a player to the scene
                         case 'P':
-                            objects[i, j] = Instantiate(PlayerPrefab, new Vector3(scale * i, 0.5f, scale * j), Quaternion.identity);
+                            objects[i, j] = Instantiate(PlayerPrefab, new Vector3((scale * i) + offset, 0.5f, (scale * j) + offset), Quaternion.identity);
                             break;
                         // Big uhoh
                         default:
