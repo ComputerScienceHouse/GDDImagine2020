@@ -40,8 +40,8 @@ public class Player : MonoBehaviour
 
         
         
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + Input.GetAxis("LeftJoystick Y"), 0);
-        Debug.Log(Input.GetAxis("LeftJoystick Y"));
+        //gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + Input.GetAxis("LeftJoystick Y"), 0);
+        //Debug.Log(Input.GetAxis("LeftJoystick Y"));
        
     }
 
