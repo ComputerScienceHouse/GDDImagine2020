@@ -6,6 +6,9 @@ public class Balloon : MonoBehaviour
 {
     Material material;
     int points;
+    public Material colorOption1;
+    public Material colorOption2;
+    public Material colorOption3;
     /// <summary>
     /// Lesser bound of balloon speed value (default: .01f)
     /// </summary>
@@ -81,8 +84,8 @@ public class Balloon : MonoBehaviour
 
     void CheckBalloonRaycast()
     {
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, .5f);
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, .5f))
+        Debug.DrawRay(new Vector3(transform.position.x,transform.position.y - .3f, 0), Vector3.down, Color.red, .2f);
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - .3f, 0), Vector3.down, out hit, .2f))
         {
             if (hit.collider.tag == "Balloon")
             {
@@ -99,13 +102,13 @@ public class Balloon : MonoBehaviour
         switch (colorValue)
         {
             case 1:
-                GetComponent<MeshRenderer>().material.color = Color.red;
+                GetComponent<MeshRenderer>().material = colorOption1;
                 break;
             case 2:
-                GetComponent<MeshRenderer>().material.color = Color.blue;
+                GetComponent<MeshRenderer>().material = colorOption2;
                 break;
             case 3:
-                GetComponent<MeshRenderer>().material.color = Color.green;
+                GetComponent<MeshRenderer>().material = colorOption3;
                 break;
         }
     }

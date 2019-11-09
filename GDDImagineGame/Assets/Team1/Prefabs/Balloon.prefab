@@ -105,5 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e182d00037b47004bb8f66ff904bc26a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorOption1: {fileID: 2100000, guid: de99249906a8feb4d8708bc5c2f324f1, type: 2}
+  colorOption2: {fileID: 2100000, guid: 1524bc955b2c3264986383b30ef68b60, type: 2}
+  colorOption3: {fileID: 2100000, guid: cd0902c6bf5244742aedbcf8a4d90b37, type: 2}
   lowerSpeedRange: 0.01
   upperSpeedRange: 0.05
