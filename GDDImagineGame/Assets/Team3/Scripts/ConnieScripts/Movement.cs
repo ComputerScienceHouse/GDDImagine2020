@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     private Rigidbody rb;
     private bool isFalling;
     private int score;
+    private int ogMultiplier;
 
     public int multiplier;
     public int maxJumpVelocity;
@@ -30,7 +31,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         isFalling = false;
-
+        ogMultiplier = multiplier;
     }
 
 
@@ -41,23 +42,25 @@ public class Movement : MonoBehaviour
     }
     void Update()
     {
-        rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * multiplier,
-            rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * multiplier);
-
-
         if (!isFalling && IsGrounded())
         {
-            rb.AddForce(new Vector3(0, Input.GetAxis("Player" + controller + "-A") * 50 * rb.mass, 0));
+            rb.AddForce(new Vector3(0, Input.GetAxis("Player" + controller + "-A") * 50 * rb.mass,0));
         }
 
         if(rb.velocity.y >= maxJumpVelocity && !isFalling)
         {
             this.isFalling = true;
+            multiplier /= 2;
+
         }
         else if(rb.velocity.y == 0)
         {
             isFalling = false;
+            multiplier = ogMultiplier;
         }
+
+        rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * multiplier,
+            rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * multiplier);
 
         //cease movement if no input
         if (Input.GetAxis("Player" + controller + "-LeftJoy-Y") == 0)
