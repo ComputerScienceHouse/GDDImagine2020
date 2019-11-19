@@ -14,6 +14,9 @@ public class Movement : MonoBehaviour
     public int maxJumpVelocity;
     public int controller;
 
+    public int coinMultiplier = 1;
+    public bool isInvincible = false;
+
     public int Score
     {
         get

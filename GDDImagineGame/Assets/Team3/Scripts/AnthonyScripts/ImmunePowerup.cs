@@ -13,6 +13,7 @@ public class ImmunePowerup : Collidable
         if (other.tag == "Player")
         {
             activePlayer = other;
+            activePlayer.GetComponent<Movement>().isInvincible = true;
             isActive = true;
             timeLeft = 2;
             gameObject.GetComponent<Renderer>().enabled = false;
@@ -29,6 +30,7 @@ public class ImmunePowerup : Collidable
             {
                 isActive = false;
                 timeLeft = 2;
+                activePlayer.GetComponent<Movement>().isInvincible = false;
             }
         }
     }

@@ -5,19 +5,14 @@ using UnityEngine.UI;
 
 public class Coin : Collidable
 {
+    public int value = 1;
+
     public override void OnCollide(GameObject other)
     {
+        Debug.Log("yo");
         if (other.tag == "Player")
         {
-            if (GameObject.Find("DoubleCoins").GetComponent<DoubleCoinsPowerup>().isActive == true)
-            {
-                gameManager.AddPoints(other, 2);
-            }
-            else
-            {
-                gameManager.AddPoints(other, 1);
-            }
-            
+            gameManager.AddPoints(other, value * other.GetComponent<Movement>().coinMultiplier);
         }
         Destroy(gameObject);
     }

@@ -13,6 +13,7 @@ public class DoubleCoinsPowerup : Collidable
         if (other.tag == "Player")
         {
             activePlayer = other;
+            activePlayer.GetComponent<Movement>().coinMultiplier = 2;
             isActive = true;
             timeLeft = 2;
             gameObject.GetComponent<Renderer>().enabled = false;
@@ -29,7 +30,7 @@ public class DoubleCoinsPowerup : Collidable
             {
                 isActive = false;
                 timeLeft = 2;
-
+                activePlayer.GetComponent<Movement>().coinMultiplier = 1;
             }
         }
     }

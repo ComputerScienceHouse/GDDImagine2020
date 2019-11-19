@@ -12,8 +12,8 @@ public enum Element
 
 public class RandomLevelGenerator : MonoBehaviour
 {
-	public GameObject floorPrefab;
-	GameObject newFloor;
+	//public GameObject floorPrefab;
+	//GameObject newFloor;
 
 	public GameObject obstaclePrefab;
 	public GameObject coinPrefab;
@@ -36,11 +36,11 @@ public class RandomLevelGenerator : MonoBehaviour
 		float totalWidth = widthStart + (widthSpread * width);
 		float totalLength = lengthStart + (lengthSpread * length);
 
-		newFloor = Instantiate(floorPrefab, new Vector3(totalWidth / 2, 0.5f, totalLength / 2), Quaternion.identity);
-		newFloor.transform.localScale = new Vector3(
-											totalWidth,
-											newFloor.transform.localScale.y,
-											totalLength);
+		//newFloor = Instantiate(floorPrefab, new Vector3(totalWidth / 2, 0.5f, totalLength / 2), Quaternion.identity);
+		//newFloor.transform.localScale = new Vector3(
+		//									totalWidth,
+		//									newFloor.transform.localScale.y,
+		//									totalLength);
 
 		// floor.transform.position.x = widthStart + (widthSpread * width);
 		// floor.transform.position.z = lengthStart + (lengthSpread + length);
