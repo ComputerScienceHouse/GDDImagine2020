@@ -18,7 +18,7 @@ public class Balloon : MonoBehaviour
     /// </summary>
     public float upperDragRange;
     //private float balloonSpeed;
-    private float tempBalloonSpeed;
+    private float TempBalloonDrag;
     private RaycastHit hit;
     CollisionManager cManage;
     GameObject temp; //Placeholder
@@ -63,7 +63,7 @@ public class Balloon : MonoBehaviour
         
        // BalloonMoveDown();
         //CheckBalloonRaycast();
-        //BalloonCollision(collision);
+            
         //if (cManage.AABBCollision(gameObject, temp))
         //{
         //    deleteObject();
@@ -74,27 +74,34 @@ public class Balloon : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collided");
+        BalloonCollision(collision);
+    }
+
+
     /// <summary>
     /// Will Move the Balloons down at a random speed
     /// </summary>
-   //void BalloonMoveDown()
-   //{
-   //    transform.position = new Vector3(transform.position.x, (transform.position.y - balloonSpeed));
-   //}
-   //
-   //void CheckBalloonRaycast()
-   //{
-   //    Debug.DrawRay(new Vector3(transform.position.x,transform.position.y - .3f, 0), Vector3.down, Color.red, .2f);
-   //    if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - .3f, 0), Vector3.down, out hit, .2f))
-   //    {
-   //        if (hit.collider.tag == "Balloon")
-   //        {
-   //            tempBalloonSpeed = hit.collider.gameObject.GetComponent<Balloon>().BalloonSpeed;
-   //            hit.collider.gameObject.GetComponent<Balloon>().BalloonSpeed = balloonSpeed;
-   //            balloonSpeed = tempBalloonSpeed;
-   //        }
-   //    }
-   //}
+    //void BalloonMoveDown()
+    //{
+    //    transform.position = new Vector3(transform.position.x, (transform.position.y - balloonSpeed));
+    //}
+    //
+    //void CheckBalloonRaycast()
+    //{
+    //    Debug.DrawRay(new Vector3(transform.position.x,transform.position.y - .3f, 0), Vector3.down, Color.red, .2f);
+    //    if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - .3f, 0), Vector3.down, out hit, .2f))
+    //    {
+    //        if (hit.collider.tag == "Balloon")
+    //        {
+    //            tempBalloonSpeed = hit.collider.gameObject.GetComponent<Balloon>().BalloonSpeed;
+    //            hit.collider.gameObject.GetComponent<Balloon>().BalloonSpeed = balloonSpeed;
+    //            balloonSpeed = tempBalloonSpeed;
+    //        }
+    //    }
+    //}
 
     void ColorSelection()
     {
@@ -113,15 +120,15 @@ public class Balloon : MonoBehaviour
         }
     }
 
-   //void BalloonCollision(Collision col)
-   //{
-   //    if (col.gameObject.tag == "Balloon")
-   //    {
-   //        tempBalloonSpeed = col.gameObject.GetComponent<Balloon>().BalloonSpeed;
-   //        col.gameObject.GetComponent<Balloon>().BalloonSpeed = balloonSpeed;
-   //        balloonSpeed = tempBalloonSpeed;
-   //    }
-   //}
+   void BalloonCollision(Collision col)
+   {
+       if (col.gameObject.tag == "Balloon")
+       {
+           TempBalloonDrag = col.gameObject.GetComponent<Rigidbody>().drag;
+           col.gameObject.GetComponent<Rigidbody>().drag = GetComponent<Rigidbody>().drag;
+           GetComponent<Rigidbody>().drag = TempBalloonDrag;
+       }
+   }
 
     void deleteObject()
     {
