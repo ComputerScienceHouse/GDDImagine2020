@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour
     Vector3 spawnPoint;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         spawnPoint = new Vector3(-10, 100, 0);
         balloonList = new List<GameObject>();
     }
