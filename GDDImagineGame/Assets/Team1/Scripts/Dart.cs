@@ -19,7 +19,7 @@ public class Dart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("player");
+        //player = GameObject.FindGameObjectWithTag("player");
         
     }
 
@@ -33,12 +33,13 @@ public class Dart : MonoBehaviour
     /// <summary>
     /// Throws the dart upon the player's command
     /// </summary>
-    /// <param name="xVal">the X Value of the dart's velocity</param>
-    /// <param name="yVal">the Y Value of the dart's velocity</param>
-    /// <param name="player">the player that threw the dart</param>
-    public void Throw(float xVal, float yVal, Player player)
+    public void Throw(float power, float angle, Player thrower)
     {
-        velocity = new Vector3(xVal, yVal, 0);
-        thrower = player;
+        this.thrower = thrower;
+        float X = -power * Mathf.Cos(angle);
+        float Y = power * Mathf.Sin(angle);
+        velocity = new Vector3(X,Y, 0);
     }
+
+    
 }

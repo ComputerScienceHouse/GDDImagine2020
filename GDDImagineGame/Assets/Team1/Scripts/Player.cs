@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     Vector3 mouseWorldPos;
     float angle;
-    GameObject arrow;
+    //GameObject arrow;
     public float power;
     public float maxPower;
     public float powerIncrement;
@@ -17,10 +17,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        arrow = GameObject.FindGameObjectWithTag("Arrow");
+        //arrow = GameObject.FindGameObjectWithTag("Arrow");
         power = 0f;
-        maxPower = 100f;
-        powerIncrement = .25f;
+        maxPower = 1f;
+        powerIncrement = .01f;
         powerUpDown = true;
         previousInput = false;
         currentInput = false;
@@ -59,15 +59,16 @@ public class Player : MonoBehaviour
 
     void RotateToMouse()
     {
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        angle = (Mathf.Atan2(-mouseWorldPos.x, mouseWorldPos.y) * Mathf.Rad2Deg);
+        mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
+        angle = (Mathf.Atan2(mouseWorldPos.y, -mouseWorldPos.x) * Mathf.Rad2Deg);
         //print(angle);
-        arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+        //arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void spawnDart()
     {
-        
-        Instantiate(dartPrefab, gameObject.transform.position, Quaternion.identity);
+        dartPrefab = Instantiate(dartPrefab, gameObject.transform.position, Quaternion.identity);
+        dartPrefab.AddComponent<Dart>();
+        dartPrefab.GetComponent<Dart>().Throw(power, angle, this);
     }
 }
