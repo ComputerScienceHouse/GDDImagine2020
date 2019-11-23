@@ -40,6 +40,7 @@ public class Dart : MonoBehaviour
         float X = -power * Mathf.Cos(angle);
         float Y = power * Mathf.Sin(angle);
         velocity = new Vector3(X,Y, 0);
+        Debug.Log("Angle: " + angle);
     }
 
     
