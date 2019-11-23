@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
             {
                 if (spawnPoint.x > 10)
                 {
-                    spawnPoint = new Vector3(-10, 10, 0);
+                    spawnPoint = new Vector3(-10, 20, 0);
                 }
                 balloonList.Add(GameObject.Instantiate(balloon, spawnPoint, Quaternion.identity));
                 spawnPoint = new Vector3(spawnPoint.x + 1, spawnPoint.y, 0);
