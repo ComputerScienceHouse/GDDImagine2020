@@ -124,16 +124,22 @@ public class Balloon : MonoBehaviour
    {
        if (col.gameObject.tag == "Balloon")
        {
-           TempBalloonDrag = col.gameObject.GetComponent<Rigidbody>().drag;
+            TempBalloonDrag = col.gameObject.GetComponent<Rigidbody>().drag;
            col.gameObject.GetComponent<Rigidbody>().drag = GetComponent<Rigidbody>().drag;
            GetComponent<Rigidbody>().drag = TempBalloonDrag;
        }
+       if(col.gameObject.tag == "Dart")
+        {
+            Debug.Log("Dart Collision");
+            deleteObject();
+        }
    }
 
     void deleteObject()
     {
-        GUI_Manager GUI = FindObjectOfType<GUI_Manager>();
-        GUI.AddScore(1, points);
+        //GUI_Manager GUI = FindObjectOfType<GUI_Manager>();
+        //GUI.AddScore(1, points);
+        Debug.Log("destroy");
         GameObject.Destroy(gameObject);
     }
 }

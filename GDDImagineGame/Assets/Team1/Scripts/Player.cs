@@ -59,16 +59,17 @@ public class Player : MonoBehaviour
 
     void RotateToMouse()
     {
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
-        angle = (Mathf.Atan2(mouseWorldPos.y, -mouseWorldPos.x) * Mathf.Rad2Deg);
+        mouseWorldPos = /*Input.mousePosition;*/Camera.main.ScreenToWorldPoint(Input.mousePosition + gameObject.transform.position) ;
+        angle = (Mathf.Atan2(mouseWorldPos.y, mouseWorldPos.x) * Mathf.Rad2Deg);
         //print(angle);
         //arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void spawnDart()
     {
-        dartPrefab = Instantiate(dartPrefab, gameObject.transform.position, Quaternion.identity);
+        dartPrefab = Instantiate(dartPrefab, gameObject.transform.position+new Vector3(2, -.5f, 0), Quaternion.identity);
         dartPrefab.AddComponent<Dart>();
         dartPrefab.GetComponent<Dart>().Throw(power, angle, this);
+        power = 0;
     }
 }
