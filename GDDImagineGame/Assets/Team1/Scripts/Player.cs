@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     {
         mouseWorldPos = /*Input.mousePosition;*/Camera.main.ScreenToWorldPoint(Input.mousePosition + gameObject.transform.position) ;
         angle = (Mathf.Atan2(mouseWorldPos.y, mouseWorldPos.x) * Mathf.Rad2Deg);
-        print(angle);
+        //print(angle);
         //arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
