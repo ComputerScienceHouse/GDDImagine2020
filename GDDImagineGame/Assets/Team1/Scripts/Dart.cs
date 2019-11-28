@@ -7,6 +7,7 @@ public class Dart : MonoBehaviour
     private Vector3 velocity;
     public GameObject player;
     private Player thrower;
+    public Collider collider;
 
     public Player Thrower
     {
@@ -20,7 +21,7 @@ public class Dart : MonoBehaviour
     void Start()
     {
         //player = GameObject.FindGameObjectWithTag("player");
-        
+        collider = new Collider();
     }
 
     // Update is called once per frame

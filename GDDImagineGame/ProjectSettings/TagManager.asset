@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Arrow
   - Balloon
+  - Dart
   layers:
   - Default
   - TransparentFX
