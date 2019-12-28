@@ -2,45 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+namespace Team1
 {
-    public bool isBouncy;
-    public bool isBreakable;
-    public int health;
-    public float bouncePower;
-    // Start is called before the first frame update
-    void Start()
+    public class Obstacle : MonoBehaviour
     {
-        isBouncy = false;
-        isBreakable = false;
-        health = -1;
-        bouncePower = 1;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Bounce(GameObject obj)
-    {
-        //dart.velocity * bouncePower in opposite direction of collision
-    }
-
-    void Collide(GameObject obj)
-    {
-        if (isBreakable)
+        public bool isBouncy;
+        public bool isBreakable;
+        public int health;
+        public float bouncePower;
+        // Start is called before the first frame update
+        void Start()
         {
-            health--;
-            if(health <= 0) {
-                Destroy(gameObject, 0f);
-            }
+            isBouncy = false;
+            isBreakable = false;
+            health = -1;
+            bouncePower = 1;
         }
 
-        if (isBouncy)
+        // Update is called once per frame
+        void Update()
         {
-            Bounce(obj);
+
+        }
+
+        void Bounce(GameObject obj)
+        {
+            //dart.velocity * bouncePower in opposite direction of collision
+        }
+
+        void Collide(GameObject obj)
+        {
+            if (isBreakable)
+            {
+                health--;
+                if (health <= 0)
+                {
+                    Destroy(gameObject, 0f);
+                }
+            }
+
+            if (isBouncy)
+            {
+                Bounce(obj);
+            }
         }
     }
 }
