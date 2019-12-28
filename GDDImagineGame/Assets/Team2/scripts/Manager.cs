@@ -51,6 +51,14 @@ public class Manager : MonoBehaviour
 		// Prevent Update() when the game has ended
 		if (gameOver) return;
 
+		// Prevent Update() while players are animating
+		/*
+		if (players[0].animating || players[1].animating || players[2].animating || players[3].animating)
+		{
+			return;
+		}
+		*/
+
 		// Increase timer
 		if (timer < timeToChoose)
 		{
@@ -84,23 +92,35 @@ public class Manager : MonoBehaviour
 				else if (choices[i] == Choice.StealLeft || choices[i] == Choice.StealAcross || choices[i] == Choice.StealRight)
 				{
 					int target = -1;
+					float degreesToRotate = 0;
 
 					switch (choices[i])
 					{
 						case Choice.StealLeft:
 							target = ((i - 1) % 4 + 4) % 4;
+							degreesToRotate = -90;
 							break;
 						case Choice.StealAcross:
 							target = ((i + 2) % 4 + 4) % 4;
+							degreesToRotate = 180;
 							break;
 						case Choice.StealRight:
 							target = ((i + 1) % 4 + 4) % 4;
+							degreesToRotate = 90;
 							break;
 					}
-					// Ignore if the chosen player is blocking, otherwise give half of score to player stealing
-					if (choices[target] != Choice.Block)
+
+					// If player is blocked from stealing
+					if (choices[target] == Choice.Block)
+					{
+						//players[i].PlayerMoveToStealUnsuccessFul(degreesToRotate);
+					}
+
+					// If player is not blocked, give half of score to player stealing
+					else
 					{
 						int half = (int)Mathf.Ceil(players[target].score / 2);
+						//players[i].PlayerMoveToStealSuccessFul(degreesToRotate);
 						players[i].score += half;
                         players[target].score -= half;
                         pileScale = (float)(half * 0.1);
@@ -113,10 +133,23 @@ public class Manager : MonoBehaviour
 			// Only one player went for the pot, give them pot value
 			if (potNum == 1)
 			{
+				//players[potPlayerNum].PlayerMoveToPotSuccessFul();
 				players[potPlayerNum].score += potValue;
                 pileScale = (float)(potValue * 0.1);
                 coinPiles[potPlayerNum].transform.localScale += new Vector3(pileScale, pileScale, pileScale);
             }
+
+			// More than one player went for the pot
+			else if (potNum > 1)
+			{
+				foreach (PlayerController pc in players)
+				{
+					if (pc.choice == Choice.Pot)
+					{
+						//pc.PlayerMoveToPotUnsuccessFul();
+					}
+				}
+			}
 
             // Reset players choices and give them some pity money
             for (int i = 0; i < players.Length; i++)
