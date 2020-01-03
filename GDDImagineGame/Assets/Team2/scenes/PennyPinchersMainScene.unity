@@ -1235,6 +1235,11 @@ PrefabInstance:
       propertyPath: stealRight
       value: 275
       objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: animTime
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3433337596703189776, guid: 82734d121651e644081af68b67e6b645,
         type: 3}
       propertyPath: m_LocalPosition.x

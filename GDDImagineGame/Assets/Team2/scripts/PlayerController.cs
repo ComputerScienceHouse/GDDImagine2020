@@ -29,28 +29,22 @@ public class PlayerController : MonoBehaviour
 
 	// Animation
 	public bool animating;
+    public float animTime;
+    public float startTime = 0.0f;
+    private Vector3 originPos;
 
     void Start()
     {
         // Initialize player vars
         score = 0;
         choice = Choice.None;
+        originPos = transform.position;
     }
 
     void Update()
     {
-		// If this player is animating, animate
-		if (animating)
-		{
-			animating = false;
-		}
-
-		// Otherwise, read input
-		else
-		{
-			PlayerAction();
-		}
-        
+        // handle player input
+		PlayerAction();        
     }
 
 	///
@@ -98,23 +92,47 @@ public class PlayerController : MonoBehaviour
 	//helper function for a successful pot steal animation
 	public void PlayerMoveToPotSuccessFul()
 	{
-		animating = true;
+        Debug.Log("Animating a successful pot grab");
+        Debug.Log("Time the animation started at: " + startTime);
+        float timeElapsed = Time.time - startTime;
+        Debug.Log("Time elapsed since start of the animation: " + timeElapsed);
+        Debug.Log("Time to complete animation: " + animTime);
+        float journeyFraction = 0.0f;
+        if (timeElapsed <= animTime / 2)
+        {
+            journeyFraction = timeElapsed / animTime * 2;
+            Debug.Log("Journey Fraction (before halfway point): " + journeyFraction);
+        }
+        else
+        {
+            Debug.Log("Journey Fraction (after halfway point): " + journeyFraction);
+            journeyFraction = 2.0f - timeElapsed / animTime * 2;
+        }
+
+        transform.position = Vector3.Lerp(originPos, GameObject.Find("Manager").GetComponent<Manager>().pot.transform.position, journeyFraction);
+
+        if(timeElapsed >= animTime)
+        {
+            Debug.Log("Animation ending");
+            transform.position = originPos;
+            animating = false;
+        }
 	}
 
 	//helper function for a unsuccessful pot steal animation
-	public void PlayerMoveToPotUnsuccessFul()
+	public void PlayerMoveToPotUnsuccessFul(Transform potPos)
 	{
 		animating = true;
 	}
 
 	//helper function for a unsuccessful pot steal animation
-	public void PlayerMoveToStealSuccessFul(float degreesToRotate)
+	public void PlayerMoveToStealSuccessFul(float degreesToRotate, Transform opponentPos)
 	{
 		animating = true;
 	}
 
 	//helper function for a unsuccessful pot steal animation
-	public void PlayerMoveToStealUnsuccessFul(float degreesToRotate)
+	public void PlayerMoveToStealUnsuccessFul(float degreesToRotate, Transform opponentPos)
 	{
 		animating = true;
 	}
