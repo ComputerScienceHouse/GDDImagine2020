@@ -11,15 +11,26 @@ public enum Choice
     None
 }
 
+// Enumeration of the animations a player can perform
+public enum Anim
+{
+    SuccessfulPot,
+    UnsuccessfulPot,
+    SuccessfulSteal,
+    UnsuccessfulSteal,
+    Block,
+    None
+}
+
 public class PlayerController : MonoBehaviour
 {
-	// Player's current score
+    // Player's current score
     public int score;
 
-	// Player's action for any given round
+    // Player's action for any given round
     public Choice choice;
 
-	// The keys this player must press to perform various actions
+    // The keys this player must press to perform various actions
     public KeyCode potButton;
     public KeyCode stealButton;
     public KeyCode blockButton;
@@ -27,30 +38,44 @@ public class PlayerController : MonoBehaviour
     public KeyCode stealAcross;
     public KeyCode stealRight;
 
-	// Animation
-	public bool animating;
+    // Animation
+    public Anim anim;
     public float animTime;
-    public float startTime = 0.0f;
-    private Vector3 originPos;
+    public float startTime;
+    public Vector3 targetPos;
+    private float timeElapsed;
+    private float journeyFraction;
+    private Transform originTransform;
+    private Vector3 potPos;
+    private Vector3 originRelCenter;
+    private Vector3 targetRelCenter;
 
     void Start()
     {
         // Initialize player vars
         score = 0;
         choice = Choice.None;
-        originPos = transform.position;
+        anim = Anim.None;
+        startTime = 0.0f;
+        timeElapsed = 0.0f;
+        journeyFraction = 0.0f;
+        originTransform = transform;
+        targetPos = Vector3.zero;
+        potPos = GameObject.Find("Manager").GetComponent<Manager>().pot.transform.position;
+        originRelCenter = originTransform.position - potPos;
+        targetRelCenter = Vector3.zero;
     }
 
     void Update()
     {
         // handle player input
-		PlayerAction();        
+        PlayerAction();
     }
 
-	///
-	/// Check for user input and print a message on the console that corresponds with the key that the user pressed
-	///
-	public void PlayerAction()
+    ///
+    /// Check for user input and print a message on the console that corresponds with the key that the user pressed
+    ///
+    public void PlayerAction()
     {
         // Only let player make choice if none has been made yet
         if (choice == Choice.None)
@@ -89,57 +114,83 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	//helper function for a successful pot steal animation
-	public void PlayerMoveToPotSuccessFul()
-	{
-        Debug.Log("Animating a successful pot grab");
-        Debug.Log("Time the animation started at: " + startTime);
-        float timeElapsed = Time.time - startTime;
-        Debug.Log("Time elapsed since start of the animation: " + timeElapsed);
-        Debug.Log("Time to complete animation: " + animTime);
-        float journeyFraction = 0.0f;
+    // Helper function for handling general animation of this player
+    public void PlayerAnimation()
+    {
+        // Set up relative target center based on the targetPos that should've been updated by the manager
+        if (targetRelCenter == Vector3.zero)
+            targetRelCenter = targetPos - potPos;
+
+        timeElapsed = Time.time - startTime;
         if (timeElapsed <= animTime / 2)
-        {
             journeyFraction = timeElapsed / animTime * 2;
-            Debug.Log("Journey Fraction (before halfway point): " + journeyFraction);
-        }
         else
-        {
-            Debug.Log("Journey Fraction (after halfway point): " + journeyFraction);
             journeyFraction = 2.0f - timeElapsed / animTime * 2;
-        }
-
-        transform.position = Vector3.Lerp(originPos, GameObject.Find("Manager").GetComponent<Manager>().pot.transform.position, journeyFraction);
-
-        if(timeElapsed >= animTime)
+        // Jump to helper function that's relevant to this player currently
+        switch (anim)
         {
-            Debug.Log("Animation ending");
-            transform.position = originPos;
-            animating = false;
+            case Anim.SuccessfulPot:
+                Debug.Log("Animating a successful pot grab");
+                PlayerMoveToPotSuccessFul();
+                break;
+            case Anim.UnsuccessfulPot:
+                Debug.Log("Animating an unsuccessful pot grab");
+                PlayerMoveToPotUnsuccessFul();
+                break;
+            case Anim.SuccessfulSteal:
+                Debug.Log("Animating a successful steal");
+                PlayerMoveToStealSuccessFul();
+                break;
+            case Anim.UnsuccessfulSteal:
+                Debug.Log("Animating an unsuccessful steal");
+                PlayerMoveToStealUnsuccessFul();
+                break;
+            case Anim.Block:
+                Debug.Log("Animating a block");
+                PlayerMoveToBlock();
+                break;
+            default:
+                break;
         }
-	}
+        // Reset this instance when the time to complete the animation has elapsed
+        if (timeElapsed >= animTime)
+        {
+            transform.position = originTransform.position;
+            transform.rotation = originTransform.rotation;
+            targetRelCenter = Vector3.zero;
+            anim = Anim.None;
+        }
+    }
 
-	//helper function for a unsuccessful pot steal animation
-	public void PlayerMoveToPotUnsuccessFul(Transform potPos)
-	{
-		animating = true;
-	}
+    // Helper function for a successful pot steal animation
+    public void PlayerMoveToPotSuccessFul()
+    {
+        transform.position = Vector3.Lerp(originTransform.position, potPos, journeyFraction);
+    }
 
-	//helper function for a unsuccessful pot steal animation
-	public void PlayerMoveToStealSuccessFul(float degreesToRotate, Transform opponentPos)
-	{
-		animating = true;
-	}
+    // Helper function for a unsuccessful pot steal animation
+    public void PlayerMoveToPotUnsuccessFul()
+    {
+        transform.position = Vector3.Lerp(originTransform.position, potPos, journeyFraction);
+    }
 
-	//helper function for a unsuccessful pot steal animation
-	public void PlayerMoveToStealUnsuccessFul(float degreesToRotate, Transform opponentPos)
-	{
-		animating = true;
-	}
+    // Helper function for a unsuccessful pot steal animation
+    public void PlayerMoveToStealSuccessFul()
+    {
+        // Interpolate over the arc relative to center (pot)
+        transform.position = Vector3.Slerp(originRelCenter, targetRelCenter, journeyFraction);
+    }
 
-	//helper function for a block animation
-	public void PlayerMoveToBlock()
-	{
-		animating = true;
-	}
+    //helper function for a unsuccessful pot steal animation
+    public void PlayerMoveToStealUnsuccessFul()
+    {
+        // Interpolate over the arc relative to center (pot)
+        transform.position = Vector3.Slerp(originRelCenter, targetRelCenter, journeyFraction);
+    }
+
+    //helper function for a block animation
+    public void PlayerMoveToBlock()
+    {
+        transform.rotation = Quaternion.Euler(0, journeyFraction, 0);
+    }
 }

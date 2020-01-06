@@ -897,6 +897,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Three
       objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: animTime
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3433337596703189776, guid: 82734d121651e644081af68b67e6b645,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -971,6 +976,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Four
+      objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: animTime
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3433337596703189776, guid: 82734d121651e644081af68b67e6b645,
         type: 3}
@@ -1117,6 +1127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Two
+      objectReference: {fileID: 0}
+    - target: {fileID: -3222763401902802492, guid: 82734d121651e644081af68b67e6b645,
+        type: 3}
+      propertyPath: animTime
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3433337596703189776, guid: 82734d121651e644081af68b67e6b645,
         type: 3}

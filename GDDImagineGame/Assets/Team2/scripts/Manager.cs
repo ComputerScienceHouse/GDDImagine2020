@@ -51,54 +51,17 @@ public class Manager : MonoBehaviour
         // Prevent Update() when the game has ended
         if (gameOver) return;
 
-        // Increase timer
+        // Increase timer when there's still time to choose
         if (timer < timeToChoose)
         {
             timer += Time.deltaTime;
             timerText.text = "Timer: " + Mathf.Round((timeToChoose - timer) * 100) / 100;
-            // special case at the end of decisionmaking period to set up animations for all players who made choices
-            if(timer >= timeToChoose)
-            {
-                foreach (PlayerController pc in players)
-                {
-                    if (pc.choice != Choice.None)
-                    {
-                        pc.startTime = Time.time;
-                        pc.animating = true;
-                    }
-                }
-            }
         }
 
-        // Once timer has reached timeToChoose, animate and handle choices
+        // Once timer has reached timeToChoose, handle choices and animate accordingly
         else
         {
-            // animate all players first, don't calculate scores until all animation is complete
-            foreach (PlayerController pc in players)
-            {
-                if (pc.animating)
-                {
-                    Debug.Log("Animating some players");
-                    Debug.Log("Player's choice:" + pc.choice);
-                    switch (pc.choice)
-                    {
-                        case Choice.Pot:
-                            Debug.Log("Animating a pot grab");
-                            pc.PlayerMoveToPotSuccessFul();
-                            break;
-                        case Choice.StealLeft:
-                        case Choice.StealAcross:
-                        case Choice.StealRight:
-                            break;
-                        case Choice.Block:
-                            break;
-                        default:
-                            break;
-                    }
-                    return;
-                }
-            }
-
+            Debug.Log("Beginning to process choices");
             // Collect Player choices
             Choice[] choices = { players[0].choice, players[1].choice, players[2].choice, players[3].choice };
 
@@ -122,45 +85,40 @@ public class Manager : MonoBehaviour
                 else if (choices[i] == Choice.StealLeft || choices[i] == Choice.StealAcross || choices[i] == Choice.StealRight)
                 {
                     int target = -1;
-                    float degreesToRotate = 0;
 
                     switch (choices[i])
                     {
                         case Choice.StealLeft:
                             target = ((i - 1) % 4 + 4) % 4;
-                            degreesToRotate = -90;
                             break;
                         case Choice.StealAcross:
                             target = ((i + 2) % 4 + 4) % 4;
-                            degreesToRotate = 180;
                             break;
                         case Choice.StealRight:
                             target = ((i + 1) % 4 + 4) % 4;
-                            degreesToRotate = 90;
                             break;
                     }
 
-                    // If player is blocked from stealing
+                    // set the destination position for this player to slerp to
+                    players[i].targetPos = coinPiles[target].transform.position;
+
+                    // If target player blocked, no change in score occurs between the two of them
                     if (choices[target] == Choice.Block)
                     {
-                        ////players[i].PlayerMoveToStealUnsuccessFul(degreesToRotate);
-                        //players[target].startTime = Time.time;
-                        ////players[target].PlayerMoveToBlock();
-                        //players[target].animating = true;
+                        players[i].anim = Anim.UnsuccessfulSteal;
+                        players[i].startTime = Time.time;
+                        players[target].anim = Anim.Block;
+                        players[target].startTime = Time.time;
                     }
 
-                    // If player is not blocked, give half of score to player stealing
+                    // If target is not blocked, give half of their score to player stealing
                     else
                     {
+                        players[i].anim = Anim.SuccessfulSteal;
+                        players[i].startTime = Time.time;
                         int half = (int)Mathf.Ceil(players[target].score / 2);
-                        //players[i].startTime = Time.time;
-                        ////players[i].PlayerMoveToStealSuccessFul(degreesToRotate);
-                        //players[i].animating = true;
                         players[i].score += half;
                         players[target].score -= half;
-                        pileScale = (float)(half * 0.1);
-                        coinPiles[i].transform.localScale += new Vector3(pileScale, pileScale, pileScale);
-                        coinPiles[target].transform.localScale -= new Vector3(pileScale, pileScale, pileScale);
                     }
                 }
             }
@@ -168,11 +126,9 @@ public class Manager : MonoBehaviour
             // Only one player went for the pot, give them pot value
             if (potNum == 1)
             {
+                players[potPlayerNum].anim = Anim.SuccessfulPot;
                 players[potPlayerNum].startTime = Time.time;
-                players[potPlayerNum].animating = true;
                 players[potPlayerNum].score += potValue;
-                pileScale = (float)(potValue * 0.1);
-                coinPiles[potPlayerNum].transform.localScale += new Vector3(pileScale, pileScale, pileScale);
             }
 
             // More than one player went for the pot
@@ -182,19 +138,28 @@ public class Manager : MonoBehaviour
                 {
                     if (pc.choice == Choice.Pot)
                     {
-                        //pc.startTime = Time.time;
-                        ////pc.PlayerMoveToPotUnsuccessFul();
-                        //pc.animating = true;
+                        pc.anim = Anim.UnsuccessfulPot;
+                        pc.startTime = Time.time;
                     }
                 }
             }
 
-            // Reset players choices and give them some pity money
+            // animate all players
+            for (int i = 0; i < players.Length; i++)
+            {
+                Debug.Log("Animating players");
+                // Only animate if this player has an active animation enum
+                while (players[i].anim != Anim.None)
+                    players[i].PlayerAnimation();
+            }
+
+            // Reset players choices, give them some pity money and update their coinpile prefabs accordingly
             for (int i = 0; i < players.Length; i++)
             {
                 players[i].choice = Choice.None;
                 players[i].score += 1;
-                coinPiles[i].transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+                pileScale = (float)(players[i].score * 0.1);
+                coinPiles[i].transform.localScale = new Vector3(pileScale, pileScale, pileScale);
                 Debug.Log(players[i].name + "'s score is: " + players[i].score);
             }
 
