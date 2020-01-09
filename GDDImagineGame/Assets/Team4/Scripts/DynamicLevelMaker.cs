@@ -35,12 +35,12 @@ public class DynamicLevelMaker : MonoBehaviour
 
             objects = new GameObject[height, width];
 
-            for (int i = 0; i < height; i++)
+            for (int j = 0; j < height; j++)
             {
                 line = roomReader.ReadLine();
-                for (int j = 0; j < width; j++)
+                for (int i = 0; i < width; i++)
                 {
-                    switch (line[j])
+                    switch (line[i])
                     {
                         // Add a wall to the game
                         case 'X':
