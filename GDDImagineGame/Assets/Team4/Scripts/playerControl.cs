@@ -22,7 +22,7 @@ public class playerControl : MonoBehaviour
 
     void playerController()
     {
-        int layerMask = 1 << 8; // I don't understand what this does
+        int layerMask = 0; // This can be zero, it then stops the weird collision thing
         RaycastHit hit;
 
         float move = speed * Time.deltaTime;
