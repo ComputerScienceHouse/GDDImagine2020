@@ -325,9 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cab42b5e70049d4580f40a11b397c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
   power: 0
   maxPower: 0
-  powerIncrement: 0
+  powerIncrement: 0.1
   dartPrefab: {fileID: 3035898759039567845, guid: 81a30e41a3b9c904caef9d308b234787,
     type: 3}
 --- !u!1 &952375092

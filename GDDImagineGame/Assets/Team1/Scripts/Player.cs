@@ -26,8 +26,7 @@ public class Player : MonoBehaviour
     public float powerIncrement;
     bool powerUpDown;
     public GameObject dartPrefab;
-    bool currentInput;
-    bool previousInput;
+    bool buttonDown;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,8 +36,7 @@ public class Player : MonoBehaviour
         maxPower = 1f;
         powerIncrement = .01f;
         powerUpDown = true;
-        previousInput = false;
-        currentInput = false;
+        buttonDown = false;
     }
 
     // Update is called once per frame
@@ -91,28 +89,24 @@ public class Player : MonoBehaviour
 
     void getInput()
     {
-        //currentInput = Input.GetMouseButton(0);
-        currentInput = Input.GetButtonDown(buttonName);
-        if (currentInput)
+        buttonDown = Input.GetButton(buttonName); 
+  
+        if (buttonDown)
         {
             if (powerUpDown) power += powerIncrement; 
             else power -= powerIncrement;
             if (power > maxPower || power < 0) powerUpDown = !powerUpDown;
             Debug.Log(power);
-            
         }
 
-        if (previousInput && !currentInput)
+        if (Input.GetButtonUp(buttonName))
         {
             spawnDart();
         }
 
-        previousInput = currentInput;
-        
-        
         //gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + Input.GetAxis("LeftJoystick Y"), 0);
         //Debug.Log(Input.GetAxis("LeftJoystick Y"));
-       
+
     }
 
     void RotateToMouse()
