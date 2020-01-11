@@ -2,8 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ControllerOptions // Options for different controllers 
+{
+    Player_1,
+    Player_2,
+    Player_3,
+    Player_4
+}
+
 public class Player : MonoBehaviour
 {
+    
+
+    public ControllerOptions playerNumber; 
+    string controllerXName; // The name of the controllers x value
+    string controllerYName; // The name of the controllers y value
+    string buttonName;
     Vector3 mouseWorldPos;
     float angle;
     //GameObject arrow;
@@ -18,6 +32,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         //arrow = GameObject.FindGameObjectWithTag("Arrow");
+        SetController();
         power = 0f;
         maxPower = 1f;
         powerIncrement = .01f;
@@ -30,18 +45,61 @@ public class Player : MonoBehaviour
     void Update()
     {
         RotateToMouse();
+        AngleInput();
         getInput();
+    }
+
+    /// <summary>
+    /// Sets the name of the players controller
+    /// </summary>
+    void SetController()
+    {
+        switch (playerNumber)
+        {
+            case ControllerOptions.Player_1:
+                controllerXName = "LeftJoystick X";
+                controllerYName = "LeftJoystick Y";
+                buttonName = "A";
+                break;
+            case ControllerOptions.Player_2:
+                controllerXName = "LeftJoystick X2";
+                controllerYName = "LeftJoystick Y2";
+                buttonName = "A 2";
+                break;
+            case ControllerOptions.Player_3:
+                controllerXName = "LeftJoystick X3";
+                controllerYName = "LeftJoystick Y3";
+                buttonName = "A 3";
+                break;
+            case ControllerOptions.Player_4:
+                controllerXName = "LeftJoystick X4";
+                controllerYName = "LeftJoystick Y4";
+                buttonName = "A 4";
+                break;
+        }        
+    }
+
+
+    /// <summary>
+    /// Gets angle from controller left joystick
+    /// </summary>
+    void AngleInput()
+    {
+        angle = Mathf.Atan2(-Input.GetAxis(controllerYName), -Input.GetAxis(controllerXName));
+        //Debug.Log(angle);
     }
 
     void getInput()
     {
-        currentInput = Input.GetMouseButton(0);
+        //currentInput = Input.GetMouseButton(0);
+        currentInput = Input.GetButtonDown(buttonName);
         if (currentInput)
         {
             if (powerUpDown) power += powerIncrement; 
             else power -= powerIncrement;
             if (power > maxPower || power < 0) powerUpDown = !powerUpDown;
             Debug.Log(power);
+            
         }
 
         if (previousInput && !currentInput)
