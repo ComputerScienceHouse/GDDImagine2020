@@ -29,7 +29,7 @@ public class CameraMovement : MonoBehaviour
         }
 
         // Move the camera and light based on this 
-        transform.position = new Vector3(x / 4, 30, z / 4 - 40);
+        transform.position = new Vector3(x / 4, 40, z / 4 - 50);
         lightObject.transform.position = new Vector3(x / 4, 40, z / 4);
 
     }

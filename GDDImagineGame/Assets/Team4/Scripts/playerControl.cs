@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using glipglop;
 
 public class playerControl : MonoBehaviour
 {
@@ -41,7 +40,7 @@ public class playerControl : MonoBehaviour
                 Debug.DrawRay(transform.position, Vector3.right * hit.distance, Color.yellow);
                 Debug.Log("Did Hit");
             }
-            else 
+            else
             {
                 // Draws an inactive ray
                 Debug.DrawRay(transform.position, Vector3.right, Color.white);
@@ -116,3 +115,40 @@ public class playerControl : MonoBehaviour
         transform.Translate(currentMove, Space.World);  // Player position is updated
     }
 }
+/*using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    private Vector3 movementVector;
+  
+    private Controller characterController;
+  
+    private float movementSpeed = 8;
+
+    public int joystickNumber;
+
+
+    void Start()
+    {
+        characterController = GetComponent<Controller>();
+    }
+ 
+    void Update()
+    {
+
+        string joystickString = joystickNumber.ToString();
+        movementVector.x = Input.GetAxis("LeftJoystickX_P" + joystickString) * movementSpeed;
+        movementVector.z = Input.GetAxis("LeftJoystickY_P" + joystickString) * movementSpeed;
+
+        if (characterController.isGrounded)
+        {
+            movementVector.y = 0;
+ 
+            if(Input.GetButtonDown("A"))
+            {
+            }
+        }
+        movementVector.y -= gravity* Time.deltaTime;
+        characterController.Move(movementVector * Time.deltaTime);
+    }
+}*/
