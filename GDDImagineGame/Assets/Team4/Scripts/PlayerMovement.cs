@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 
 public class playerControl : MonoBehaviour
 {
@@ -114,41 +114,120 @@ public class playerControl : MonoBehaviour
 
         transform.Translate(currentMove, Space.World);  // Player position is updated
     }
-}
-/*using UnityEngine;
+}*/
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
-{
-    private Vector3 movementVector;
-  
-    private Controller characterController;
-  
-    private float movementSpeed = 8;
+{  
+    private float speed;
+
+    private Vector3 currentMove;
 
     public int joystickNumber;
 
-
     void Start()
     {
-        characterController = GetComponent<Controller>();
+        speed = 10.0f;
+        currentMove = Vector3.zero;
     }
  
     void Update()
     {
+        string num = joystickNumber.ToString();
+        Debug.Log(num);
 
-        string joystickString = joystickNumber.ToString();
-        movementVector.x = Input.GetAxis("LeftJoystickX_P" + joystickString) * movementSpeed;
-        movementVector.z = Input.GetAxis("LeftJoystickY_P" + joystickString) * movementSpeed;
+        float moveHorizontal = Input.GetAxisRaw($"LeftJoystickX_P{num}");
+        float moveVertical = Input.GetAxisRaw($"LeftJoystickY_P{num}") * -1;
 
-        if (characterController.isGrounded)
+        int layerMask = 0; // This can be zero, it then stops the weird collision thing
+        RaycastHit hit;
+
+        float move = speed * Time.deltaTime;
+
+        //transform.position = Vector3.MoveTowards(transform.position, tf.position, move); // Smooth camera movements
+
+        currentMove = Vector3.zero;  // If player is not moving and has not hit a wall, the default movement vector is 0
+
+        if (moveHorizontal == 1)
         {
-            movementVector.y = 0;
- 
-            if(Input.GetButtonDown("A"))
+            if (Physics.Raycast(transform.position, Vector3.right, out hit, 1, layerMask))  // Checks if object global right raycast is colliding with a wall
             {
+                // Draws an active ray
+                Debug.DrawRay(transform.position, Vector3.right * hit.distance, Color.yellow);
+                Debug.Log("Did Hit");
             }
+            else
+            {
+                // Draws an inactive ray
+                Debug.DrawRay(transform.position, Vector3.right, Color.white);
+                Debug.Log("Did Not Hit");
+
+                currentMove = Vector3.right * move;
+            }
+
+            transform.rotation = Quaternion.LookRotation(Vector3.right);  // Player facing direction is updated to right
         }
-        movementVector.y -= gravity* Time.deltaTime;
-        characterController.Move(movementVector * Time.deltaTime);
+
+        else if (moveHorizontal == -1)
+        {
+            if (Physics.Raycast(transform.position, Vector3.left, out hit, 1, layerMask))  // Checks if object global left raycast is colliding with a wall
+            {
+                // Draws an active ray
+                Debug.DrawRay(transform.position, Vector3.left * hit.distance, Color.yellow);
+                Debug.Log("Did Hit");
+            }
+            else
+            {
+                // Draws an inactive ray
+                Debug.DrawRay(transform.position, Vector3.left, Color.white);
+                Debug.Log("Did Not Hit");
+
+                currentMove = Vector3.left * move;
+            }
+
+            transform.rotation = Quaternion.LookRotation(Vector3.left);  // Player facing direction is updated to left
+        }
+
+        else if (moveVertical == 1)
+        {
+            if (Physics.Raycast(transform.position, Vector3.forward, out hit, 1, layerMask))  // Checks if object global forwards raycast is colliding with a wall
+            {
+                // Draws an active ray
+                Debug.DrawRay(transform.position, Vector3.forward * hit.distance, Color.yellow);
+                Debug.Log("Did Hit");
+            }
+            else
+            {
+                // Draws an inactive ray
+                Debug.DrawRay(transform.position, Vector3.forward, Color.white);
+                Debug.Log("Did Not Hit");
+
+                currentMove = Vector3.forward * move;
+            }
+
+            transform.rotation = Quaternion.LookRotation(Vector3.forward);  // Player facing direction is updated to forwards
+        }
+
+        else if (moveVertical == -1)
+        {
+            if (Physics.Raycast(transform.position, Vector3.back, out hit, 1, layerMask))  // Checks if object global backwards raycast is colliding with a wall
+            {
+                // Draws an active ray
+                Debug.DrawRay(transform.position, Vector3.back * hit.distance, Color.yellow);
+                Debug.Log("Did Hit");
+            }
+            else
+            {
+                // Draws an inactive ray
+                Debug.DrawRay(transform.position, Vector3.back, Color.white);
+                Debug.Log("Did Not Hit");
+
+                currentMove = Vector3.back * move;
+            }
+
+            transform.rotation = Quaternion.LookRotation(Vector3.back);  // Player facing direction is updated to backwards
+        }
+
+        transform.Translate(currentMove, Space.World);  // Player position is updated
     }
-}*/
+}

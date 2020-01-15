@@ -32,6 +32,7 @@ public class DynamicLevelMaker : MonoBehaviour
             string line;
             int width = int.Parse(roomReader.ReadLine());
             int height = int.Parse(roomReader.ReadLine());
+            int currentController = 0;
 
             objects = new GameObject[height, width];
 
@@ -54,11 +55,19 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'E':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(EnemyPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
+                            PlayerMovement enemy = FindObjectOfType<PlayerMovement>();
+
+                            enemy.joystickNumber = currentController;
+                            currentController++;
                             break;
                         // Add a player to the scene
                         case 'P':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(PlayerPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
+                            PlayerMovement player = FindObjectOfType<PlayerMovement>();
+
+                            player.joystickNumber = currentController;
+                            currentController++;
                             break;
                         // Big uhoh
                         default:
