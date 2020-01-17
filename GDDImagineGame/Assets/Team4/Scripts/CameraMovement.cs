@@ -8,12 +8,14 @@ public class CameraMovement : MonoBehaviour
 
     // This will be all of the objects that can be played in the room
     private GameObject[] players;
+    private GameObject[] enemies;
 
     private GameObject lightObject;
     // Start is called before the first frame update
     void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
         lightObject = Instantiate(LightPrefab);
     }
 
@@ -26,6 +28,12 @@ public class CameraMovement : MonoBehaviour
         {
             x += player.transform.position.x;
             z += player.transform.position.z;
+        }
+
+        foreach (GameObject enemy in enemies)
+        {
+            x += enemy.transform.position.x;
+            z += enemy.transform.position.z;
         }
 
         // Move the camera and light based on this 

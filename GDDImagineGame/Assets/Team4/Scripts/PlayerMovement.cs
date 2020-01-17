@@ -119,7 +119,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {  
-    private float speed;
+    public float speed;
+    public float defaultSpeed;
 
     private Vector3 currentMove;
 
@@ -128,13 +129,13 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         speed = 10.0f;
+        defaultSpeed = 10.0f;
         currentMove = Vector3.zero;
     }
  
     void Update()
     {
         string num = joystickNumber.ToString();
-        Debug.Log(num);
 
         float moveHorizontal = Input.GetAxisRaw($"LeftJoystickX_P{num}");
         float moveVertical = Input.GetAxisRaw($"LeftJoystickY_P{num}") * -1;

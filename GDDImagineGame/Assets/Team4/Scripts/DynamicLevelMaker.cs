@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
+using glipglop;
+using System.Collections.Generic;
 
 public class DynamicLevelMaker : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class DynamicLevelMaker : MonoBehaviour
 
     private GameObject[,] objects;
     private GameObject floor;
+    private DeviceManager manager;
 
     public int scale;
     public string roomName;
@@ -24,6 +27,24 @@ public class DynamicLevelMaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Dictionary<string, List<string>> devices = new Dictionary<string, List<string>>
+        {
+            {
+                "D0",
+                new List<string>()
+                {
+                    "P0",
+                    "P1",
+                    "P2",
+                    "P3",
+                }
+            }
+        };
+
+        manager = new DeviceManager(devices);
+        manager.AddPressed(new PressedDel(SlowPlayers), "P0", "D0");
+        manager.AddReleased(new ReleasedDel(NormalSpeedPlayers), "P0", "D0");
+
         //Try catch 
         try
         {
@@ -86,9 +107,27 @@ public class DynamicLevelMaker : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void SlowPlayers()
     {
-         // Not sure if we will ever need this or not
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            
+        foreach (GameObject player in players)
+        {
+            PlayerMovement comp = player.GetComponent<PlayerMovement>();
+
+            comp.speed = comp.defaultSpeed - 5;
+        }
+    }
+
+    void NormalSpeedPlayers()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            PlayerMovement comp = player.GetComponent<PlayerMovement>();
+
+            comp.speed = comp.defaultSpeed;
+        }
     }
 }
