@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
 
     void spawnDart()
     {
-        dartPrefab = Instantiate(dartPrefab, gameObject.transform.position+new Vector3(2, -.5f, 0), Quaternion.identity);
+        dartPrefab = Instantiate(dartPrefab, gameObject.transform.position+new Vector3(2f, -.5f, 0), Quaternion.identity);
         dartPrefab.AddComponent<Dart>();
         dartPrefab.GetComponent<Dart>().Throw(power, angle, this);
         power = 0;
