@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void SetController()
     {
+        Debug.Log(playerNumber);
         switch (playerNumber)
         {
             case ControllerOptions.Player_1:
@@ -74,7 +75,8 @@ public class Player : MonoBehaviour
                 controllerYName = "LeftJoystick Y4";
                 buttonName = "A 4";
                 break;
-        }        
+        }
+        Debug.Log(playerNumber);
     }
 
 
