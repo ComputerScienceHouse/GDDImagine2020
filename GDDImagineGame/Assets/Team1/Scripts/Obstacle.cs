@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     public bool isBouncy;
     public bool isBreakable;
+    public bool isSolid;
     public int health;
     public float bouncePower;
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class Obstacle : MonoBehaviour
     {
         isBouncy = false;
         isBreakable = false;
+        isSolid = true;
         health = -1;
         bouncePower = 1;
     }
@@ -30,6 +32,8 @@ public class Obstacle : MonoBehaviour
 
     void Collide(GameObject obj)
     {
+        //Keep these three separate so we can invoke multiple at once, like a 
+        //breakable bouncy block
         if (isBreakable)
         {
             health--;
@@ -41,6 +45,10 @@ public class Obstacle : MonoBehaviour
         if (isBouncy)
         {
             Bounce(obj);
+        }
+
+        if(isSolid){
+            //Destroy obj, will most likely need to be handled by agentmanager
         }
     }
 }

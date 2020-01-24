@@ -5,18 +5,22 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject balloon;
+    public GameObject obstacle;
 
     /// <summary>
     /// Number of frames in between the spawning of balloon waves
     /// </summary>
     public int spawnRate;
+    Random rand = new Random();
     List<GameObject> balloonList;
+    List<GameObject> obstacleList;
     Vector3 spawnPoint;
     // Start is called before the first frame update
     void Start()
     {   
         spawnPoint = new Vector3(-10, 100, 0);
         balloonList = new List<GameObject>();
+        obstacleList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -34,6 +38,18 @@ public class Spawner : MonoBehaviour
                 balloonList.Add(GameObject.Instantiate(balloon, spawnPoint, Quaternion.identity));
                 spawnPoint = new Vector3(spawnPoint.x + 1, spawnPoint.y, 0);
             }
+        }
+
+        // Randomly also spawns obstacles
+        // All the code I added in last commit is probably bugged but we're pushing during a meeting yeet
+        obstChance = rand.RandomRange(0.00f, 10.00f);
+        if(obstChance < 0.15f){
+            if (spawnPoint.x > 10)
+            {
+                spawnPoint = new Vector3(-10, 20, 0);
+            }
+            obstacleList.Add(GameObject.Instantiate(obstacle, spawnPoint, Quaternion.identity));
+            spawnPoint = new Vector3(spawnPoint.x + 1, spawnPoint.y, 0);
         }
     }
 }
