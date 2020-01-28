@@ -157,6 +157,7 @@ MonoBehaviour:
     type: 3}
   EnemyPrefab: {fileID: 4718922012966317786, guid: 36abdfd0338a46a409bbc26e5912f7f3,
     type: 3}
+  DotPrefab: {fileID: 0}
   scale: 1
   roomName: room.txt
 --- !u!4 &268373785

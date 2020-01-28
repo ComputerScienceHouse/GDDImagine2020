@@ -17,6 +17,9 @@ public class DynamicLevelMaker : MonoBehaviour
     [SerializeField]
     public GameObject EnemyPrefab;
 
+    [SerializeField]
+    public GameObject DotPrefab;
+
     private GameObject[,] objects;
     private GameObject floor;
     private DeviceManager manager;
@@ -71,6 +74,11 @@ public class DynamicLevelMaker : MonoBehaviour
                         // Create a floor piece
                         case '.':
                             objects[i, j] = Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
+                            break;
+                        // Create a dot piece with a floor piece under it
+                        case 'D':
+                            Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
+                            //objects[i, j] = Instantiate(DotPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
                             break;
                         // Add an enemy to the game and a floor under them
                         case 'E':
