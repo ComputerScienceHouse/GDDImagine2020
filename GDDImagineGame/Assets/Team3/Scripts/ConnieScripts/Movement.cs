@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public enum PlayerType
+    {
+        Knight,
+        Witch,
+        Wizard,
+        Dragon
+    }
+
     //fields for player class.
     private Rigidbody rb;
     private bool isFalling;
@@ -13,6 +21,7 @@ public class Movement : MonoBehaviour
     public int multiplier;
     public int maxJumpVelocity;
     public int controller;
+    public PlayerType type; 
 
     public int Score
     {
@@ -71,6 +80,23 @@ public class Movement : MonoBehaviour
         if (Input.GetAxis("Player" + controller + "-LeftJoy-X") == 0)
         {
             rb.velocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
+        }
+
+        if (Input.GetAxis("Player" + controller + "-B") == 1)
+        {
+            switch (type)
+            {
+                case PlayerType.Dragon:
+                    break;
+                case PlayerType.Knight:
+                    gameObject.GetComponent<Renderer>().enabled = false;
+                    gameObject.GetComponent<Collider>().enabled = false;
+                    break;
+                case PlayerType.Witch:
+                    break;
+                case PlayerType.Wizard:
+                    break;
+            }
         }
     }
 }

@@ -585,6 +585,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2395583408559992130, guid: f40661840e1699a42b2ac1201823fbfd,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f40661840e1699a42b2ac1201823fbfd, type: 3}
 --- !u!1 &855295330
@@ -755,6 +760,11 @@ PrefabInstance:
       propertyPath: controller
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2395583408559992130, guid: f40661840e1699a42b2ac1201823fbfd,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f40661840e1699a42b2ac1201823fbfd, type: 3}
 --- !u!1 &1057744414
@@ -859,7 +869,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1120077660}
   - component: {fileID: 1120077659}
-  - component: {fileID: 1120077658}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -867,14 +876,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1120077658
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120077657}
-  m_Enabled: 1
 --- !u!20 &1120077659
 Camera:
   m_ObjectHideFlags: 0
@@ -1566,6 +1567,11 @@ PrefabInstance:
       propertyPath: controller
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2395583408559992130, guid: f40661840e1699a42b2ac1201823fbfd,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f40661840e1699a42b2ac1201823fbfd, type: 3}
 --- !u!1001 &1634954231
@@ -2143,6 +2149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: controller
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2395583408559992130, guid: f40661840e1699a42b2ac1201823fbfd,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f40661840e1699a42b2ac1201823fbfd, type: 3}
