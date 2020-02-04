@@ -16,12 +16,15 @@ public class Movement : MonoBehaviour
     private Rigidbody rb;
     private bool isFalling;
     private int score;
-    private int ogMultiplier;
 
+    public int ogMultiplier;
     public int multiplier;
     public int maxJumpVelocity;
     public int controller;
     public PlayerType type; 
+
+    public int coinMultiplier = 1;
+    public bool isInvincible = false;
 
     public int Score
     {

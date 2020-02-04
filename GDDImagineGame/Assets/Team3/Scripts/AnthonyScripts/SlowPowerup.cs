@@ -13,7 +13,7 @@ public class SlowPowerup : Collidable
         if (other.tag == "Player")
         {
             activePlayer = other;
-            other.GetComponent<Movement>().multiplier = 5;
+            other.GetComponent<Movement>().ogMultiplier = 5;
             isActive = true;
             timeLeft = 2;
             gameObject.GetComponent<Renderer>().enabled = false;
@@ -28,7 +28,7 @@ public class SlowPowerup : Collidable
             timeLeft -= Time.deltaTime;
             if (timeLeft <= 0)
             {
-                activePlayer.GetComponent<Movement>().multiplier = 10;
+                activePlayer.GetComponent<Movement>().ogMultiplier = 10;
                 isActive = false;
                 timeLeft = 2;
                 

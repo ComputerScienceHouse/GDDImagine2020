@@ -11,19 +11,20 @@ public class GameManager : MonoBehaviour
     public GameObject cam;
     public Canvas can;
 
+    float camSpeed = 2f;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        //players = GameObject.FindGameObjectsWithTag("Player");
         collidables = new List<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float camSpeed = .2F;
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, cam.transform.position.z + camSpeed);
+        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, cam.transform.position.z + (camSpeed * Time.deltaTime));
         DisplayPoints();
     }
 

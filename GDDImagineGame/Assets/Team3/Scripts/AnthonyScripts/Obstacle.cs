@@ -5,14 +5,16 @@ using UnityEngine.UI;
 
 public class Obstacle : Collidable
 {
+    public int damage = 1;
+
     public override void OnCollide(GameObject other)
     {
         if (other.tag == "Player")
         {
-            if (GameObject.Find("Immune").GetComponent<ImmunePowerup>().isActive == false)
+            if (!other.GetComponent<Movement>().isInvincible)
             {
                 if (other.GetComponent<Movement>().Score > 0)
-                    gameManager.SubtractPoints(other, 1);
+                    gameManager.SubtractPoints(other, damage);
             }
         }
     }
