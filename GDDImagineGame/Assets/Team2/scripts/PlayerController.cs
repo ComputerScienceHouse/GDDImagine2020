@@ -123,9 +123,15 @@ public class PlayerController : MonoBehaviour
 
         timeElapsed = Time.time - startTime;
         if (timeElapsed <= animTime / 2)
+        {
             journeyFraction = timeElapsed / animTime * 2;
+            Debug.Log("Leaving origin");
+        }
         else
+        {
             journeyFraction = 2.0f - timeElapsed / animTime * 2;
+            Debug.Log("Returning to origin");
+        }
         // Jump to helper function that's relevant to this player currently
         switch (anim)
         {
@@ -166,12 +172,18 @@ public class PlayerController : MonoBehaviour
     public void PlayerMoveToPotSuccessFul()
     {
         transform.position = Vector3.Lerp(originTransform.position, potPos, journeyFraction);
+        Vector3 temp = transform.position;
+        temp.y = 1.0f;
+        transform.position = temp;
     }
 
     // Helper function for a unsuccessful pot steal animation
     public void PlayerMoveToPotUnsuccessFul()
     {
         transform.position = Vector3.Lerp(originTransform.position, potPos, journeyFraction);
+        Vector3 temp = transform.position;
+        temp.y = 1.0f;
+        transform.position = temp;
     }
 
     // Helper function for a unsuccessful pot steal animation
@@ -179,6 +191,9 @@ public class PlayerController : MonoBehaviour
     {
         // Interpolate over the arc relative to center (pot)
         transform.position = Vector3.Slerp(originRelCenter, targetRelCenter, journeyFraction);
+        Vector3 temp = transform.position;
+        temp.y = 1.0f;
+        transform.position = temp;
     }
 
     //helper function for a unsuccessful pot steal animation
@@ -186,11 +201,17 @@ public class PlayerController : MonoBehaviour
     {
         // Interpolate over the arc relative to center (pot)
         transform.position = Vector3.Slerp(originRelCenter, targetRelCenter, journeyFraction);
+        Vector3 temp = transform.position;
+        temp.y = 1.0f;
+        transform.position = temp;
     }
 
     //helper function for a block animation
     public void PlayerMoveToBlock()
     {
         transform.rotation = Quaternion.Euler(0, journeyFraction, 0);
+        Vector3 temp = transform.position;
+        temp.y = 1.0f;
+        transform.position = temp;
     }
 }

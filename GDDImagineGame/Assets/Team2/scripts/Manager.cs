@@ -51,6 +51,17 @@ public class Manager : MonoBehaviour
         // Prevent Update() when the game has ended
         if (gameOver) return;
 
+        // Animate players if needed
+        for (int i = 0; i < players.Length; i++)
+        {
+            // Only animate if this player has an active animation enum
+            if (players[i].anim != Anim.None)
+            {
+                players[i].PlayerAnimation();
+                return;
+            }
+        }
+
         // Increase timer when there's still time to choose
         if (timer < timeToChoose)
         {
@@ -142,15 +153,6 @@ public class Manager : MonoBehaviour
                         pc.startTime = Time.time;
                     }
                 }
-            }
-
-            // animate all players
-            for (int i = 0; i < players.Length; i++)
-            {
-                Debug.Log("Animating players");
-                // Only animate if this player has an active animation enum
-                while (players[i].anim != Anim.None)
-                    players[i].PlayerAnimation();
             }
 
             // Reset players choices, give them some pity money and update their coinpile prefabs accordingly
