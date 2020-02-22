@@ -118,8 +118,6 @@ public class Manager : MonoBehaviour
                     {
                         players[i].anim = Anim.UnsuccessfulSteal;
                         players[i].startTime = Time.time;
-                        players[target].anim = Anim.Block;
-                        players[target].startTime = Time.time;
                     }
 
                     // If target is not blocked, give half of their score to player stealing
@@ -131,6 +129,13 @@ public class Manager : MonoBehaviour
                         players[i].score += half;
                         players[target].score -= half;
                     }
+                }
+
+                // Player chose to block
+                else if(choices[i] == Choice.Block)
+                {
+                    players[i].anim = Anim.Block;
+                    players[i].startTime = Time.time;
                 }
             }
 

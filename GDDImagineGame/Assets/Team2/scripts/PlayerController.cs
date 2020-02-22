@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 targetPos;
     private float timeElapsed;
     private float journeyFraction;
-    private Transform originTransform;
+    private Vector3 originPos;
+    private Quaternion originRot;
     private Vector3 potPos;
     private Vector3 originRelCenter;
     private Vector3 targetRelCenter;
@@ -59,10 +60,11 @@ public class PlayerController : MonoBehaviour
         startTime = 0.0f;
         timeElapsed = 0.0f;
         journeyFraction = 0.0f;
-        originTransform = transform;
+        originPos = transform.position;
+        originRot = transform.rotation;
         targetPos = Vector3.zero;
         potPos = GameObject.Find("Manager").GetComponent<Manager>().pot.transform.position;
-        originRelCenter = originTransform.position - potPos;
+        originRelCenter = originPos - potPos;
         targetRelCenter = Vector3.zero;
     }
 
@@ -161,8 +163,8 @@ public class PlayerController : MonoBehaviour
         // Reset this instance when the time to complete the animation has elapsed
         if (timeElapsed >= animTime)
         {
-            transform.position = originTransform.position;
-            transform.rotation = originTransform.rotation;
+            transform.position = originPos;
+            transform.rotation = originRot;
             targetRelCenter = Vector3.zero;
             anim = Anim.None;
         }
@@ -171,7 +173,7 @@ public class PlayerController : MonoBehaviour
     // Helper function for a successful pot steal animation
     public void PlayerMoveToPotSuccessFul()
     {
-        transform.position = Vector3.Lerp(originTransform.position, potPos, journeyFraction);
+        transform.position = Vector3.Lerp(originPos, potPos, journeyFraction);
         Vector3 temp = transform.position;
         temp.y = 1.0f;
         transform.position = temp;
@@ -180,7 +182,7 @@ public class PlayerController : MonoBehaviour
     // Helper function for a unsuccessful pot steal animation
     public void PlayerMoveToPotUnsuccessFul()
     {
-        transform.position = Vector3.Lerp(originTransform.position, potPos, journeyFraction);
+        transform.position = Vector3.Lerp(originPos, potPos, journeyFraction);
         Vector3 temp = transform.position;
         temp.y = 1.0f;
         transform.position = temp;
@@ -209,7 +211,7 @@ public class PlayerController : MonoBehaviour
     //helper function for a block animation
     public void PlayerMoveToBlock()
     {
-        transform.rotation = Quaternion.Euler(0, journeyFraction, 0);
+        transform.rotation = Quaternion.Euler(0, journeyFraction * 360, 0);
         Vector3 temp = transform.position;
         temp.y = 1.0f;
         transform.position = temp;
