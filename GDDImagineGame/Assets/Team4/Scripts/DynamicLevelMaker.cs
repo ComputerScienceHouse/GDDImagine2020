@@ -84,6 +84,7 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'D':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(DotPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
+                            objects[i, j].GetComponent<Score>().ScoreVal = 1;
                             break;
                         // Add an enemy to the game and a floor under them
                         case 'E':
