@@ -3,8 +3,7 @@
 public class CameraMovement : MonoBehaviour
 {
     // Light Prefab
-    [SerializeField]
-    private GameObject LightPrefab;
+    public GameObject LightPrefab;
 
     // This will be all of the objects that can be played in the room
     private GameObject[] players;

@@ -58,7 +58,7 @@ public class DynamicLevelMaker : MonoBehaviour
             int height = int.Parse(roomReader.ReadLine());
             int currentController = 0;
 
-            objects = new GameObject[height, width];
+            objects = new GameObject[width, height];
 
             for (int j = 0; j < height; j++)
             {
@@ -78,7 +78,7 @@ public class DynamicLevelMaker : MonoBehaviour
                         // Create a dot piece with a floor piece under it
                         case 'D':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
-                            //objects[i, j] = Instantiate(DotPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
+                            objects[i, j] = Instantiate(DotPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
                             break;
                         // Add an enemy to the game and a floor under them
                         case 'E':
@@ -107,10 +107,10 @@ public class DynamicLevelMaker : MonoBehaviour
 
             roomReader.Close();
         }
-        catch
+        catch (System.Exception e)
         {
             Debug.Log(Application.dataPath);
-            Debug.Log("Could not find the file");
+            Debug.Log(e.Message);
             //TODO: Here we should just make a default room
         }
     }

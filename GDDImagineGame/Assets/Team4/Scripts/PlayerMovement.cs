@@ -122,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float defaultSpeed;
     public float timeToFreeze;
+    public static int playerScore;
+    public static int enemyScore;
 
     private Vector3 currentMove;
     private Vector3 originalPosition;
@@ -130,6 +132,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        playerScore = 0;
+        enemyScore = 0;
         speed = 10.0f;
         defaultSpeed = 10.0f;
         currentMove = Vector3.zero;
@@ -270,11 +274,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")
+
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")  // Enemy-Player Collisions
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
         }
+
+        if (collision.gameObject.tag == "Dot")  // Collisions with dot object
+        {
+            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+            Destroy(collision.gameObject);
+
+            if (gameObject.tag == "Player")
+            {
+                playerScore += 1;
+            }
+            else if (gameObject.tag == "Enemy")
+            {
+                enemyScore += 1;
+            }
+            Debug.Log("Player: " + playerScore + "  :  Enemy: " + enemyScore);
+
+        }
+
 
         if (collision.gameObject.tag == "Player")
         {
@@ -289,11 +311,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy" && gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Enemy" && gameObject.tag == "Player")  // Allows enemies/players to interact with each other
+        {
+            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), false);
+
+        }
+
+        if (collision.gameObject.tag == "Dot")  // Allows enemies/players to collect dots
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), false);
         }
-        
+
     }
 
 }
