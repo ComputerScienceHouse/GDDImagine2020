@@ -130,7 +130,7 @@ public class DynamicLevelMaker : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void KillConfirmed(Vector3 deadPosition)
+    public int KillConfirmed(Vector3 deadPosition, int playerScore)
     {
 
         List<Vector3> freePoints = new List<Vector3>();
@@ -177,6 +177,10 @@ public class DynamicLevelMaker : MonoBehaviour
         int point = rand.Next(0, freePoints.Count);
 
         objects[(int)freePoints[point].x, (int)freePoints[point].z] = Instantiate(KillConfirmedPrefab, freePoints[point], Quaternion.identity);
+        objects[(int)freePoints[point].x, (int)freePoints[point].z].GetComponent<Score>().ScoreVal = (playerScore / 2);
+
+        return playerScore / 2;
+
     }
 
     void SlowPlayers()
