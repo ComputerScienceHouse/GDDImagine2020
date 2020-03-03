@@ -9,16 +9,19 @@ public class DynamicLevelMaker : MonoBehaviour
     private GameObject WallPrefab;
 
     [SerializeField]
-    public GameObject FloorPrefab;
+    private GameObject FloorPrefab;
 
     [SerializeField]
     public GameObject PlayerPrefab;
 
     [SerializeField]
-    public GameObject EnemyPrefab;
+    private GameObject EnemyPrefab;
 
     [SerializeField]
-    public GameObject DotPrefab;
+    private GameObject DotPrefab;
+
+    [SerializeField]
+    private GameObject KillConfirmedPrefab;
 
     private GameObject[,] objects;
     private GameObject floor;
@@ -26,10 +29,12 @@ public class DynamicLevelMaker : MonoBehaviour
 
     public int scale;
     public string roomName;
+    private System.Random rand;
 
     // Start is called before the first frame update
     void Start()
     {
+        rand = new System.Random();
         Dictionary<string, List<string>> devices = new Dictionary<string, List<string>>
         {
             {
@@ -113,6 +118,65 @@ public class DynamicLevelMaker : MonoBehaviour
             Debug.Log(e.Message);
             //TODO: Here we should just make a default room
         }
+    }
+
+    public void RemoveObject(GameObject gameObject)
+    {
+        int x = (int)gameObject.transform.position.x;
+        int y = (int)gameObject.transform.position.y;
+
+        objects[x, y] = null;
+
+        Destroy(gameObject);
+    }
+
+    public void KillConfirmed(Vector3 deadPosition)
+    {
+
+        List<Vector3> freePoints = new List<Vector3>();
+
+        for (int x = 0; x < objects.GetLength(0); x++)
+        {
+            for (int y = 0; y < objects.GetLength(1); y++)
+            {
+                if(objects[x,y].tag == "Floor")
+                {
+                    freePoints.Add(objects[x, y].transform.position);
+                }
+            }
+        }
+
+        PlayerMovement[] players = FindObjectsOfType<PlayerMovement>();
+
+        foreach (Vector3 vector in freePoints)
+        {
+            if (vector.x == deadPosition.x && vector.z == deadPosition.z)
+            {
+                freePoints.Remove(vector);
+                break;
+            }
+        }
+
+        object removeVect = null;
+        foreach (PlayerMovement player in players)
+        {
+            foreach(Vector3 vector in freePoints)
+            {
+                if (vector.x == player.gameObject.transform.position.x && vector.z == player.gameObject.transform.position.z)
+                {
+                    removeVect = vector;
+                }
+            }
+            if (removeVect != null)
+            {
+                freePoints.Remove((Vector3)removeVect);
+                removeVect = null;
+            }
+        }
+
+        int point = rand.Next(0, freePoints.Count);
+
+        objects[(int)freePoints[point].x, (int)freePoints[point].z] = Instantiate(KillConfirmedPrefab, freePoints[point], Quaternion.identity);
     }
 
     void SlowPlayers()
