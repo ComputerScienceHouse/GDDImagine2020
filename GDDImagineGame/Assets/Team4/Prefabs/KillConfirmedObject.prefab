@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6375334818855271259}
   - component: {fileID: 4564797028387594795}
   - component: {fileID: 5893223835521368155}
+  - component: {fileID: 1334381711968565595}
   m_Layer: 0
   m_Name: KillConfirmedObject
   m_TagString: Untagged
@@ -92,3 +93,15 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1334381711968565595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3016356661265341099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84e7ccf1b1a76b48840199ec1de5ace, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

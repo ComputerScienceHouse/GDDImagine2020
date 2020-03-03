@@ -106,6 +106,7 @@ public class DynamicLevelMaker : MonoBehaviour
                             break;
                         // Big uhoh
                         default:
+                            objects[i, j] = new GameObject();
                             break;
                     }
                 }
@@ -124,9 +125,9 @@ public class DynamicLevelMaker : MonoBehaviour
     public void RemoveObject(GameObject gameObject)
     {
         int x = (int)gameObject.transform.position.x;
-        int y = (int)gameObject.transform.position.y;
+        int z = (int)gameObject.transform.position.z;
 
-        objects[x, y] = null;
+        objects[x, z] = null;
 
         Destroy(gameObject);
     }
@@ -140,9 +141,12 @@ public class DynamicLevelMaker : MonoBehaviour
         {
             for (int y = 0; y < objects.GetLength(1); y++)
             {
-                if(objects[x,y].tag == "Floor")
+                if(objects[x, y] == null)
                 {
-                    freePoints.Add(objects[x, y].transform.position);
+                    freePoints.Add(new Vector3(x, 0.5f, y));
+                } else if (objects[x, y].tag == "Floor")
+                {
+                    freePoints.Add(new Vector3(0, 0.5f, 0) + objects[x, y].transform.position);
                 }
             }
         }
@@ -174,7 +178,10 @@ public class DynamicLevelMaker : MonoBehaviour
                 removeVect = null;
             }
         }
-
+        if (freePoints.Count == 0)
+        {
+            return 0;
+        }
         int point = rand.Next(0, freePoints.Count);
 
         objects[(int)freePoints[point].x, (int)freePoints[point].z] = Instantiate(KillConfirmedPrefab, freePoints[point], Quaternion.identity);
