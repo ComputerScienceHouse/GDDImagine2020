@@ -35,23 +35,9 @@ public class DynamicLevelMaker : MonoBehaviour
     void Start()
     {
         rand = new System.Random();
-        Dictionary<string, List<string>> devices = new Dictionary<string, List<string>>
-        {
-            {
-                "D0",
-                new List<string>()
-                {
-                    "P0",
-                    "P1",
-                    "P2",
-                    "P3",
-                }
-            }
-        };
-
-        manager = new DeviceManager(devices);
-        manager.AddPressed(new PressedDel(SlowPlayers), "P0", "D0");
-        manager.AddReleased(new ReleasedDel(NormalSpeedPlayers), "P0", "D0");
+        manager = new DeviceManager();
+        manager.AddPressed(new PressedDel(SlowPlayers), "D0", "P0");
+        manager.AddReleased(new ReleasedDel(NormalSpeedPlayers), "D0", "P0");
 
         //Try catch 
         try
@@ -193,18 +179,20 @@ public class DynamicLevelMaker : MonoBehaviour
 
     void SlowPlayers()
     {
+        Debug.Log("Slowing players");
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             
         foreach (GameObject player in players)
         {
             PlayerMovement comp = player.GetComponent<PlayerMovement>();
 
-            comp.speed = comp.defaultSpeed - 5;
+            comp.speed = 0;//comp.defaultSpeed - 5;
         }
     }
 
     void NormalSpeedPlayers()
     {
+        Debug.Log("Normalize players");
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (GameObject player in players)
