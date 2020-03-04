@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Dot
   - Floor
+  - KillConfirm
   layers:
   - Default
   - TransparentFX

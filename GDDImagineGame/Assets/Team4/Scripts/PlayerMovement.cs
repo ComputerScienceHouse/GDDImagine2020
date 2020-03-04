@@ -149,7 +149,6 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")  // Enemy-Player Collisions
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-            Score.setPlayerScore(gameObject, collision.gameObject.GetComponent<PlayerMovement>().localScore / 2);
         }
 
         if (collision.gameObject.tag == "Dot")  // Collisions with dot object
@@ -165,6 +164,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "KillConfirm")
         {
             int scoreVal = collision.gameObject.GetComponent<Score>().ScoreVal;
+            FindObjectOfType<DynamicLevelMaker>().RemoveObject(collision.gameObject);
             Score.setPlayerScore(gameObject, scoreVal);
         }
 
@@ -176,7 +176,8 @@ public class PlayerMovement : MonoBehaviour
         else if (collision.gameObject.tag == "Enemy" && gameObject.tag != "Enemy")
         {
             int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
-            Score.setPlayerScore(gameObject, scoreVal);
+            Score.setPlayerScore(gameObject, -scoreVal);
+            Score.setPlayerScore(collision.gameObject, scoreVal);
             transform.position = originalPosition;
             timeToFreeze = 3.0f;
         }
