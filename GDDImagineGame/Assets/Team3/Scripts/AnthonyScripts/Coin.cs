@@ -11,6 +11,7 @@ public class Coin : Collidable
     protected override void Start()
     {
         isPermanent = true;
+        type = ModType.Permanent;
         base.Start();
     }
 

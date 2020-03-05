@@ -10,16 +10,22 @@ public class SlowPowerup : Collidable
     protected override void Start()
     {
         isPermanent = false;
+        type = ModType.SlowDown;
         base.Start();
     }
 
     protected override void PlayerModFunc(Movement player)
     {
-        player.speedMultiplier *= slowDebuffMultiplier;
+        Debug.Log("SLOW Start");
+        if (player.speedBoostMultiplier == 1)
+        {
+            player.speedBoostMultiplier = slowDebuffMultiplier;
+        }
     }
 
     protected override void PlayerModCallback(Movement player)
     {
-        player.speedMultiplier /= slowDebuffMultiplier;
+        player.speedBoostMultiplier = 1;
+        Debug.Log("SLOW End");
     }
 }

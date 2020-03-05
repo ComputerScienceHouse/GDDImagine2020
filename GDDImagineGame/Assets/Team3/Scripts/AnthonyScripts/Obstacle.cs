@@ -11,6 +11,7 @@ public class Obstacle : Collidable
     protected override void Start()
     {
         isPermanent = true;
+        type = ModType.Permanent;
         base.Start();
     }
 
@@ -23,4 +24,9 @@ public class Obstacle : Collidable
     }
 
     protected override void PlayerModCallback(Movement player) { }
+
+    public override void OnCollide(Movement player)
+    {
+        player.ApplyPlayerMod(PlayerModFunc);
+    }
 }

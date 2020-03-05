@@ -7,12 +7,14 @@ public class DoubleCoinsPowerup : Collidable
     protected override void Start()
     {
         isPermanent = false;
+        type = ModType.DoubleCoin;
         base.Start();
     }
 
     protected override void PlayerModFunc(Movement player)
     {
-        if(player.coinMultiplier < 2)
+        Debug.Log("2X Start");
+        if (player.coinMultiplier < 2)
         {
             player.coinMultiplier *= 2;
         }
@@ -21,5 +23,6 @@ public class DoubleCoinsPowerup : Collidable
     protected override void PlayerModCallback(Movement player)
     {
         player.coinMultiplier /= 2;
+        Debug.Log("2X End");
     }
 }

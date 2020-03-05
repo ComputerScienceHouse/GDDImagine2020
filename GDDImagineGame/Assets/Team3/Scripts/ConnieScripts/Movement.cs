@@ -4,6 +4,16 @@ using UnityEngine;
 
 public delegate void ModPlayer(Movement player);
 
+public enum ModType
+{
+    SpeedUp = 0,
+    SlowDown = 1,
+    NoJump = 2,
+    ReverseControls = 3,
+    Immune = 4,
+    DoubleCoin = 5,
+    Permanent = 6
+}
 public class Movement : MonoBehaviour
 {
     public enum PlayerType
@@ -20,13 +30,15 @@ public class Movement : MonoBehaviour
     private int score;
 
     public float speedMultiplier;
-    public int maxJumpVelocity;
+    public float maxJumpVelocity;
     public int controller;
     public PlayerType type;
 
     public float speedBoostMultiplier = 1;
     public int coinMultiplier = 1;
     public bool isInvincible = false;
+
+    private IEnumerator[] currentMods = new IEnumerator[6];
 
     public int Score
     {
@@ -116,12 +128,18 @@ public class Movement : MonoBehaviour
     /// Applies a certain buff or debuff to a player for a certain time and then sets it back
     /// </summary>
     /// <param name="playerMod">Buff or debuff that is applied to the player</param>
+    /// <param name="modType">The type of mod being applied to the player</param>
     /// <param name="time">The time the buff or debuff lasts for in seconds</param>
     /// <param name="callback">The callback function that resets the modified values</param>
-    public void ApplyPlayerMod(ModPlayer playerMod, float time, ModPlayer callback)
+    public void ApplyPlayerMod(ModPlayer playerMod, ModType modType, float time, ModPlayer callback)
     {
         playerMod(this);
-        StartCoroutine(PlayerModCallback(time, callback));
+        if(currentMods[(int)modType] != null)
+        {
+            StopCoroutine(currentMods[(int)modType]);
+        }
+        currentMods[(int)modType] = PlayerModCallback(time, callback);
+        StartCoroutine(currentMods[(int)modType]);
     }
 
     /// <summary>
@@ -130,7 +148,7 @@ public class Movement : MonoBehaviour
     /// <param name="time">The time the buff or debuff lasts for in seconds</param>
     /// <param name="callback">The callback function that resets the modified values</param>
     /// <returns></returns>
-    private IEnumerator PlayerModCallback(float time, ModPlayer callback)
+    public IEnumerator PlayerModCallback(float time, ModPlayer callback)
     {
         yield return new WaitForSecondsRealtime(time);
         callback(this);
