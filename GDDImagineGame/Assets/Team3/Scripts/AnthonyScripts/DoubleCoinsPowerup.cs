@@ -4,34 +4,22 @@ using UnityEngine;
 
 public class DoubleCoinsPowerup : Collidable
 {
-    public float timeLeft = 2;
-
-    public bool isActive = false;
-    private GameObject activePlayer;
-    public override void OnCollide(GameObject other)
+    protected override void Start()
     {
-        if (other.tag == "Player")
+        isPermanent = false;
+        base.Start();
+    }
+
+    protected override void PlayerModFunc(Movement player)
+    {
+        if(player.coinMultiplier < 2)
         {
-            activePlayer = other;
-            activePlayer.GetComponent<Movement>().coinMultiplier = 2;
-            isActive = true;
-            timeLeft = 2;
-            gameObject.GetComponent<Renderer>().enabled = false;
-            gameObject.GetComponent<Collider>().enabled = false;
+            player.coinMultiplier *= 2;
         }
     }
 
-    private void Update()
+    protected override void PlayerModCallback(Movement player)
     {
-        if (isActive == true)
-        {
-            timeLeft -= Time.deltaTime;
-            if (timeLeft <= 0)
-            {
-                isActive = false;
-                timeLeft = 2;
-                activePlayer.GetComponent<Movement>().coinMultiplier = 1;
-            }
-        }
+        player.coinMultiplier /= 2;
     }
 }

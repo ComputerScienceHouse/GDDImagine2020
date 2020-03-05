@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8497148591642208875}
   - component: {fileID: 8497148591642208874}
   - component: {fileID: 8497148591642208873}
+  - component: {fileID: -6348624660871575673}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -123,6 +124,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90328a9c326f4da488c38269143e9dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 10
+  speedMultiplier: 10
   maxJumpVelocity: 5
   controller: 1
+  type: 0
+  coinMultiplier: 1
+  isInvincible: 0
+--- !u!114 &-6348624660871575673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497148591642208872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55bcda755a3ed5d419a78716f9b1b397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

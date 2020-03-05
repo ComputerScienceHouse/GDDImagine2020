@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3274148874755390148}
   - component: {fileID: 3274148874755390151}
   - component: {fileID: 3274148874755390150}
-  - component: {fileID: 3274148874755390145}
   - component: {fileID: 3274148874755390144}
+  - component: {fileID: 3274148874755390145}
   m_Layer: 0
   m_Name: Speedup
   m_TagString: Untagged
@@ -80,19 +80,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3274148874755390145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3274148874755390147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27491b7824b505749b3e87ab2515cb63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeLeft: 2
 --- !u!136 &3274148874755390144
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -107,3 +94,17 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3274148874755390145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3274148874755390147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27491b7824b505749b3e87ab2515cb63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeLimit: 2
+  speedBoostMultiplier: 2

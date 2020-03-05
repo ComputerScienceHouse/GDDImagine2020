@@ -106,4 +106,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec373dfebae34b48a936a55143adaa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 2
+  timeLimit: 2
+  slowDebuffMultiplier: 0.5

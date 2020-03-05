@@ -4,36 +4,25 @@ using UnityEngine;
 
 public class SpeedPowerup : Collidable
 {
-    public float timeLeft = 2;
+    [Range(1, 5)]
+    public float speedBoostMultiplier = 2;
 
-    private bool isActive = false;
-    private GameObject activePlayer;
-    public override void OnCollide(GameObject other)
+    protected override void Start()
     {
-        if (other.tag == "Player")
+        isPermanent = false;
+        base.Start();
+    }
+
+    protected override void PlayerModFunc(Movement player)
+    {
+        if (player.speedBoostMultiplier == 1)
         {
-            Debug.Log(other);
-            activePlayer = other;
-            other.GetComponent<Movement>().ogMultiplier = 20;
-            isActive = true;
-            timeLeft = 2;
-            gameObject.GetComponent<Renderer>().enabled = false;
-            gameObject.GetComponent<Collider>().enabled = false;
+            player.speedBoostMultiplier = speedBoostMultiplier;
         }
     }
 
-    private void Update()
+    protected override void PlayerModCallback(Movement player)
     {
-        if (isActive == true)
-        {
-            Debug.Log(activePlayer.GetComponent<Movement>().ogMultiplier);
-            timeLeft -= Time.deltaTime;
-            if (timeLeft <= 0)
-            {
-                activePlayer.GetComponent<Movement>().ogMultiplier = 10;
-                isActive = false;
-                timeLeft = 2;
-            }
-        }
+        player.speedBoostMultiplier = 1;
     }
 }

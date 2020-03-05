@@ -6,15 +6,46 @@ public abstract class Collidable : MonoBehaviour
 {
     protected GameManager gameManager;
 
-    public abstract void OnCollide(GameObject other);
+    [Range(0.5f, 5)]
+    public float timeLimit = 0.5f;
+
+    protected bool isPermanent;
+
+    protected abstract void PlayerModFunc(Movement player);
+    protected abstract void PlayerModCallback(Movement player);
+
+    public void OnCollide(Movement player)
+    {
+        if (isPermanent)
+        {
+            player.ApplyPlayerMod(PlayerModFunc);
+        }
+        else
+        {
+            player.ApplyPlayerMod(PlayerModFunc, timeLimit, PlayerModCallback);
+        }
+
+        Destroy(this.gameObject);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        OnCollide(other.gameObject);
+        if (other.CompareTag("Player"))
+        {
+            OnCollide(other.gameObject.GetComponent<Movement>());
+        }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    private void Update()
+    {
+        if(transform.position.z - Camera.main.transform.position.z <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

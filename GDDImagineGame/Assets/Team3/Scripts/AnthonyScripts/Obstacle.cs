@@ -5,17 +5,22 @@ using UnityEngine.UI;
 
 public class Obstacle : Collidable
 {
-    public int damage = 1;
+    [Range(1, 100)]
+    public int obstacleValue = 1;
 
-    public override void OnCollide(GameObject other)
+    protected override void Start()
     {
-        if (other.tag == "Player")
+        isPermanent = true;
+        base.Start();
+    }
+
+    protected override void PlayerModFunc(Movement player)
+    {
+        if (!player.isInvincible)
         {
-            if (!other.GetComponent<Movement>().isInvincible)
-            {
-                if (other.GetComponent<Movement>().Score > 0)
-                    gameManager.SubtractPoints(other, damage);
-            }
+            player.Score -= obstacleValue;
         }
     }
+
+    protected override void PlayerModCallback(Movement player) { }
 }
