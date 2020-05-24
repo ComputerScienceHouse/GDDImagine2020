@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4116955780822573989}
-  - component: {fileID: 4116955780822574043}
+  - component: {fileID: -6260173974019866315}
   - component: {fileID: 4116955780822574040}
   - component: {fileID: 4116955780822574041}
   - component: {fileID: 4116955780822573991}
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4116955780822574043
+--- !u!114 &-6260173974019866315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,13 +45,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4116955780822573986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41bf7d63348ccd546b98d8d6488721dd, type: 3}
+  m_Script: {fileID: 11500000, guid: a84be5d85b771344882d282b83e0b93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
   defaultSpeed: 0
   timeToFreeze: 0
   joystickNumber: 0
+  localScore: 0
 --- !u!33 &4116955780822574040
 MeshFilter:
   m_ObjectHideFlags: 0

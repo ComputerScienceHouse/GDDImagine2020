@@ -76,7 +76,7 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'E':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(EnemyPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
-                            Player enemy = FindObjectOfType<Player>();
+                            Player enemy = FindObjectOfType<EnemyPlayer>();
 
                             enemy.joystickNumber = currentController;
                             currentController++;
@@ -85,7 +85,7 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'P':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(PlayerPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
-                            Player player = FindObjectOfType<Player>();
+                            Player player = FindObjectOfType<AllyPlayer>();
 
                             player.joystickNumber = currentController;
                             currentController++;

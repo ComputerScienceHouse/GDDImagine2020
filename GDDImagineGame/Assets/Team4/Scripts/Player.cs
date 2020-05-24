@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public abstract class Player : MonoBehaviour
 {  
     public float speed;
     public float defaultSpeed;
@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public int localScore;
 
-    void Start()
+    protected void Start()
     {
         playerScore = 0;
         enemyScore = 0;
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
         timeToFreeze = 0.0f;
     }
  
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (timeToFreeze > 0)
         {
