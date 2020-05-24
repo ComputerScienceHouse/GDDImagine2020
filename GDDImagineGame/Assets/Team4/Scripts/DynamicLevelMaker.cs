@@ -76,7 +76,7 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'E':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(EnemyPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
-                            PlayerMovement enemy = FindObjectOfType<PlayerMovement>();
+                            Player enemy = FindObjectOfType<Player>();
 
                             enemy.joystickNumber = currentController;
                             currentController++;
@@ -85,7 +85,7 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'P':
                             Instantiate(FloorPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j] = Instantiate(PlayerPrefab, new Vector3((scale * i), 0.5f, (scale * j)), Quaternion.identity);
-                            PlayerMovement player = FindObjectOfType<PlayerMovement>();
+                            Player player = FindObjectOfType<Player>();
 
                             player.joystickNumber = currentController;
                             currentController++;
@@ -137,7 +137,7 @@ public class DynamicLevelMaker : MonoBehaviour
             }
         }
 
-        PlayerMovement[] players = FindObjectsOfType<PlayerMovement>();
+        Player[] players = FindObjectsOfType<Player>();
 
         foreach (Vector3 vector in freePoints)
         {
@@ -149,7 +149,7 @@ public class DynamicLevelMaker : MonoBehaviour
         }
 
         object removeVect = null;
-        foreach (PlayerMovement player in players)
+        foreach (Player player in players)
         {
             foreach(Vector3 vector in freePoints)
             {
@@ -184,7 +184,7 @@ public class DynamicLevelMaker : MonoBehaviour
             
         foreach (GameObject player in players)
         {
-            PlayerMovement comp = player.GetComponent<PlayerMovement>();
+            Player comp = player.GetComponent<Player>();
 
             comp.speed = 0;//comp.defaultSpeed - 5;
         }
@@ -197,7 +197,7 @@ public class DynamicLevelMaker : MonoBehaviour
 
         foreach (GameObject player in players)
         {
-            PlayerMovement comp = player.GetComponent<PlayerMovement>();
+            Player comp = player.GetComponent<Player>();
 
             comp.speed = comp.defaultSpeed;
         }

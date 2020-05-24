@@ -12,12 +12,12 @@ public class Score : MonoBehaviour
     {
         if (gameObject.tag == "Player")
         {
-            PlayerMovement.playerScore += score;
+            Player.playerScore += score;
         }
         else if (gameObject.tag == "Enemy")
         {
-            PlayerMovement.enemyScore += score;
+            Player.enemyScore += score;
         }
-        gameObject.GetComponent<PlayerMovement>().localScore += score; // Increments player's personal score
+        gameObject.GetComponent<Player>().localScore += score; // Increments player's personal score
     }
 }
