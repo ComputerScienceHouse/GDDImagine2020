@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using UnityEngine;
-using glipglop;
+//using glipglop;
 using System.Collections.Generic;
 
 public class DynamicLevelMaker : MonoBehaviour
@@ -25,7 +25,7 @@ public class DynamicLevelMaker : MonoBehaviour
 
     private GameObject[,] objects;
     private GameObject floor;
-    private DeviceManager manager;
+    //private DeviceManager manager;
 
     public int scale;
     public string roomName;
@@ -35,9 +35,9 @@ public class DynamicLevelMaker : MonoBehaviour
     void Start()
     {
         rand = new System.Random();
-        manager = new DeviceManager();
-        manager.AddPressed(new PressedDel(SlowPlayers), "D0", "P0");
-        manager.AddReleased(new ReleasedDel(NormalSpeedPlayers), "D0", "P0");
+        //manager = new DeviceManager();
+        //manager.AddPressed(new PressedDel(SlowPlayers), "D0", "P0");
+        //manager.AddReleased(new ReleasedDel(NormalSpeedPlayers), "D0", "P0");
 
         //Try catch 
         try
