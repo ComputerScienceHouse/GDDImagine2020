@@ -28,6 +28,10 @@ public class AllyPlayer : Player
                 AllyScore += KillConfirm(collider);
                 Debug.Log("AllyScore: " + AllyScore);
                 break;
+            case "Dot":
+                AllyScore += 1;
+                base.OnTriggerEnter(collider);
+                break;
             default:
                 base.OnTriggerEnter(collider);
                 break;

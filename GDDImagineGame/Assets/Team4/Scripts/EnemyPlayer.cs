@@ -29,6 +29,10 @@ public class EnemyPlayer : Player
             case "Bullet":
                 InitDeath();
                 break;
+            case "Dot":
+                EnemyScore += 1;
+                base.OnTriggerEnter(collider);
+                break;
             default:
                 base.OnTriggerEnter(collider);
                 break;
