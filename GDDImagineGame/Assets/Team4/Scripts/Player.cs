@@ -5,8 +5,6 @@ public abstract class Player : MonoBehaviour
     public float speed;
     public float defaultSpeed;
     public float timeToFreeze;
-    public static int playerScore;
-    public static int enemyScore;
 
     private Vector3 currentMove;
     protected Vector3 originalPosition;
@@ -17,9 +15,6 @@ public abstract class Player : MonoBehaviour
 
     protected void Start()
     {
-        playerScore = 0;
-        enemyScore = 0;
-
         localScore = 0;
 
         speed = 10.0f;
@@ -159,9 +154,16 @@ public abstract class Player : MonoBehaviour
 
     protected int KillConfirm(Collider collider)
     {
+        // Get point value of KillConfirm object
         int scoreVal = collider.gameObject.GetComponent<Score>().ScoreVal;
+        
+        // Remove KillConfirm object from the collection of KillConfirm objects
         FindObjectOfType<DynamicLevelMaker>().RemoveObject(collider.gameObject);
+
+        // Increment player score by said point value
         Score.setPlayerScore(gameObject, scoreVal);
+
+        // Return the score for use in adding to team player scores
         return scoreVal;
     }
 

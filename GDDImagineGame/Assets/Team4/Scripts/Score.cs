@@ -10,14 +10,6 @@ public class Score : MonoBehaviour
 
     public static void setPlayerScore(GameObject gameObject, int score)
     {
-        if (gameObject.tag == "Player")
-        {
-            Player.playerScore += score;
-        }
-        else if (gameObject.tag == "Enemy")
-        {
-            Player.enemyScore += score;
-        }
         gameObject.GetComponent<Player>().localScore += score; // Increments player's personal score
     }
 }
