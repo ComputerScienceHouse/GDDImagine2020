@@ -9,7 +9,7 @@ public abstract class Player : MonoBehaviour
     public static int enemyScore;
 
     private Vector3 currentMove;
-    private Vector3 originalPosition;
+    protected Vector3 originalPosition;
 
     public int joystickNumber;
 
@@ -143,6 +143,51 @@ public abstract class Player : MonoBehaviour
 
     // Death and scoring vvvv
 
+    protected void OnTriggerEnter(Collider collider)
+    {
+        switch (collider.gameObject.tag)
+        {
+            case "Dot":
+                FindObjectOfType<DynamicLevelMaker>().RemoveObject(collider.gameObject);
+                Score.setPlayerScore(gameObject, 1);
+                Debug.Log(name + "score: " + localScore);
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected int KillConfirm(Collider collider)
+    {
+        int scoreVal = collider.gameObject.GetComponent<Score>().ScoreVal;
+        FindObjectOfType<DynamicLevelMaker>().RemoveObject(collider.gameObject);
+        Score.setPlayerScore(gameObject, scoreVal);
+        return scoreVal;
+    }
+
+    /* Handles player behavior on death. Player loses a number of
+     * points based on their current score. They are respawned and
+     * immobilized for 3 seconds.
+     */
+    protected void InitDeath()
+    {
+        // Gets a KillConfirmed object score value based on player's current score
+        int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
+        
+        // Deducts score of player that was just killed
+        Score.setPlayerScore(gameObject, -scoreVal);
+
+        // Adds half of players score when killed to killer player
+        //Score.setPlayerScore(collider.gameObject, scoreVal);
+
+        // Respawns player
+        transform.position = originalPosition;
+        
+        // Death timer
+        timeToFreeze = 3.0f;
+    }
+
+    /*
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -195,4 +240,5 @@ public abstract class Player : MonoBehaviour
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), false);
         }
     }
+*/
 }
