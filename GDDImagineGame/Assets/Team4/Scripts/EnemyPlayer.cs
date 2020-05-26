@@ -28,11 +28,9 @@ public class EnemyPlayer : Player
             case "Bullet":
                 //Death handled by bullet
             case "KillConfirm":
-                EnemyScore += KillConfirm(collider);
-                //Debug.Log("EnemyScore: " + EnemyScore);
+                KillConfirm(collider);
                 break;
             case "Dot":
-                EnemyScore += 1;
                 base.OnTriggerEnter(collider);
                 break;
             default:
@@ -54,4 +52,9 @@ public class EnemyPlayer : Player
         }
     }
     protected override void Shoot(string controllerNum) { /* Enemy cannot shoot */ }
+
+    public override void setTeamScore(int score)
+    {
+        EnemyScore += score;
+    }
 }

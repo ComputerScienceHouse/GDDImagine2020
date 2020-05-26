@@ -177,7 +177,8 @@ public abstract class Player : MonoBehaviour
         {
             case "Dot":
                 FindObjectOfType<DynamicLevelMaker>().RemoveObject(collider.gameObject);
-                Score.setPlayerScore(gameObject, 1);
+                //Score.setPlayerScore(gameObject, 1);
+                setPlayerScore(1);
                 //Debug.Log(name + "score: " + localScore);
                 break;
             default:
@@ -185,7 +186,7 @@ public abstract class Player : MonoBehaviour
         }
     }
 
-    protected int KillConfirm(Collider collider)
+    protected void KillConfirm(Collider collider)
     {
         // Get point value of KillConfirm object
         int scoreVal = collider.gameObject.GetComponent<Score>().ScoreVal;
@@ -194,10 +195,8 @@ public abstract class Player : MonoBehaviour
         FindObjectOfType<DynamicLevelMaker>().RemoveObject(collider.gameObject);
 
         // Increment player score by said point value
-        Score.setPlayerScore(gameObject, scoreVal);
-
-        // Return the score for use in adding to team player scores
-        return scoreVal;
+        //Score.setPlayerScore(gameObject, scoreVal);
+        setPlayerScore(scoreVal);
     }
 
     /* Handles player behavior on death. Player loses a number of
@@ -209,9 +208,10 @@ public abstract class Player : MonoBehaviour
         setPlayerState(PlayerState.DEAD);
         // Gets a KillConfirmed object score value based on player's current score
         int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
-        
+
         // Deducts score of player that was just killed
-        Score.setPlayerScore(gameObject, -scoreVal);
+        //Score.setPlayerScore(gameObject, -scoreVal);
+        setPlayerScore(-scoreVal);
 
         // Adds half of players score when killed to killer player
         //Score.setPlayerScore(collider.gameObject, scoreVal);
@@ -226,4 +226,12 @@ public abstract class Player : MonoBehaviour
     protected abstract Material setMaterial(PlayerState id);
 
     protected abstract void Shoot(string controllerNum);
+
+    public void setPlayerScore(int score)
+    {
+        localScore += score; // Increments player's personal score
+        setTeamScore(score);
+    }
+
+    public abstract void setTeamScore(int score);
 }

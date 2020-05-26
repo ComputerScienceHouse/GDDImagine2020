@@ -41,11 +41,9 @@ public class AllyPlayer : Player
                 //do nothing
                 break;
             case "KillConfirm":
-                AllyScore += KillConfirm(collider);
-                //Debug.Log("AllyScore: " + AllyScore);
+                KillConfirm(collider);
                 break;
             case "Dot":
-                AllyScore += 1;
                 base.OnTriggerEnter(collider);
                 break;
             default:
@@ -77,10 +75,12 @@ public class AllyPlayer : Player
             Debug.Log("FIRE!");
             GameObject bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().setOwner(this);
-            AllyScore--;
-            localScore--;
-            //Transform bulletTransform = bullet.GetComponent<Transform>();
-            //bulletTransform.position = Vector3.Lerp(transform.position, transform.forward * 10, 100);
+            setPlayerScore(-1);
         }
+    }
+
+    public override void setTeamScore(int score)
+    {
+        AllyScore += score;
     }
 }
