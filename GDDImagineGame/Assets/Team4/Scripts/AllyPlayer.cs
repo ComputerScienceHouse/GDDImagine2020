@@ -7,9 +7,9 @@ public class AllyPlayer : Player
 {
     private static int AllyScore;
     
-    public float fireRate;
-    public float nextFire;
-    public float fireRange;
+    public float FireRate;
+    public float NextFire;
+    public float FireRange;
 
     public Material LIVE_MATERIAL;
     public Material DEAD_MATERIAL;
@@ -17,13 +17,14 @@ public class AllyPlayer : Player
     [SerializeField]
     private GameObject BulletPrefab;
 
+
     protected void Start()
     {
         AllyScore = 0;
 
-        fireRate = 2.0f;
-        nextFire = 0.0f;
-        fireRange = 4.0f;
+        FireRate = 2.0f;
+        NextFire = 0.0f;
+        FireRange = 4.0f;
 
         base.Start();
     }
@@ -41,7 +42,7 @@ public class AllyPlayer : Player
                 break;
             case "KillConfirm":
                 AllyScore += KillConfirm(collider);
-                Debug.Log("AllyScore: " + AllyScore);
+                //Debug.Log("AllyScore: " + AllyScore);
                 break;
             case "Dot":
                 AllyScore += 1;
@@ -51,11 +52,12 @@ public class AllyPlayer : Player
                 base.OnTriggerEnter(collider);
                 break;
         }
+        Debug.Log("personal=" + localScore + " : allyteam=" + AllyScore);
     }
 
-    protected override Material setMaterial(string id)
+    protected override Material setMaterial(PlayerState id)
     {
-        if (id.Equals("dead"))
+        if (id.Equals(PlayerState.DEAD))
         {
             return DEAD_MATERIAL;
         } else
@@ -67,11 +69,11 @@ public class AllyPlayer : Player
     {
         float fire = Input.GetAxisRaw($"RightTrigger_P{controllerNum}");
 
-        if (fire >= 0.3f && Time.time > nextFire && localScore > 0 && AllyScore > 0)
+        if (fire >= 0.3f && Time.time > NextFire && localScore > 0 && AllyScore > 0)
         {
             float startTime = Time.time;
 
-            nextFire = Time.time + ( 1 / fireRate ); // 1/FireRate gives period of shots
+            NextFire = Time.time + ( 1 / FireRate ); // 1/FireRate gives period of shots
             Debug.Log("FIRE!");
             GameObject bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().setOwner(this);

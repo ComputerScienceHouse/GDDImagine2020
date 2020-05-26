@@ -20,12 +20,12 @@ public class Bullet : MonoBehaviour
         speed = 50.0f;
         startTime = Time.time;
         startMarker = owner.GetComponent<Transform>().position;
-        endMarker = startMarker + owner.GetComponent<Transform>().forward * owner.GetComponent<AllyPlayer>().fireRange;
+        endMarker = startMarker + owner.GetComponent<Transform>().forward * owner.GetComponent<AllyPlayer>().FireRange;
         journeyLength = Vector3.Distance(startMarker, endMarker);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float distCovered = (Time.time - startTime) * speed;
         float fractionOfJourney = distCovered / journeyLength;

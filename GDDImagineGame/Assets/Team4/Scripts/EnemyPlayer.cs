@@ -29,7 +29,7 @@ public class EnemyPlayer : Player
                 //Death handled by bullet
             case "KillConfirm":
                 EnemyScore += KillConfirm(collider);
-                Debug.Log("EnemyScore: " + EnemyScore);
+                //Debug.Log("EnemyScore: " + EnemyScore);
                 break;
             case "Dot":
                 EnemyScore += 1;
@@ -39,11 +39,12 @@ public class EnemyPlayer : Player
                 base.OnTriggerEnter(collider);
                 break;
         }
+        Debug.Log("personal=" + localScore + " : enemyteam=" + EnemyScore);
     }
 
-    protected override Material setMaterial(string id)
+    protected override Material setMaterial(PlayerState id)
     {
-        if (id.Equals("dead"))
+        if (id.Equals(PlayerState.DEAD))
         {
             return DEAD_MATERIAL;
         }

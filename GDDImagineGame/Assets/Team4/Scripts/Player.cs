@@ -13,9 +13,15 @@ public abstract class Player : MonoBehaviour
 
     public int localScore;
 
+    protected PlayerState playerState;
+    protected PlayerState lastPlayerState; 
+
     protected void Start()
     {
         localScore = 0;
+
+        playerState = PlayerState.ALIVE;
+        lastPlayerState = PlayerState.ALIVE;
 
         speed = 10.0f;
         defaultSpeed = 10.0f;
@@ -29,14 +35,37 @@ public abstract class Player : MonoBehaviour
         if (timeToFreeze > 0)
         {
             //Sets object material to dead texture
-            gameObject.GetComponent<MeshRenderer>().material = setMaterial("dead");
+            if (lastPlayerState.Equals(PlayerState.ALIVE))
+            {
+                gameObject.GetComponent<MeshRenderer>().material = setMaterial(PlayerState.DEAD);
+            }
+            
             timeToFreeze -= Time.deltaTime;
         } 
         else
         {
             //Sets object material to alive texture
-            gameObject.GetComponent<MeshRenderer>().material = setMaterial("alive");
+            if (lastPlayerState.Equals(PlayerState.DEAD))
+            {
+                gameObject.GetComponent<MeshRenderer>().material = setMaterial(PlayerState.ALIVE);
+            }
             playerControl();
+        }
+    }
+
+    protected enum PlayerState
+    {
+        DEAD,
+        ALIVE
+    }
+
+    //Sets lastPlayerState to current, and current to PlayerState param
+    protected void setPlayerState(PlayerState newState)
+    {
+        if (!playerState.Equals(newState))
+        {
+            lastPlayerState = playerState;
+            playerState = newState;
         }
     }
 
@@ -56,6 +85,7 @@ public abstract class Player : MonoBehaviour
 
         currentMove = Vector3.zero;  // If player is not moving and has not hit a wall, the default movement vector is 0
 
+        setPlayerState(PlayerState.ALIVE);
         Shoot(num); // Abstract method
 
         if (moveHorizontal >= 0.7f)
@@ -148,7 +178,7 @@ public abstract class Player : MonoBehaviour
             case "Dot":
                 FindObjectOfType<DynamicLevelMaker>().RemoveObject(collider.gameObject);
                 Score.setPlayerScore(gameObject, 1);
-                Debug.Log(name + "score: " + localScore);
+                //Debug.Log(name + "score: " + localScore);
                 break;
             default:
                 break;
@@ -176,6 +206,7 @@ public abstract class Player : MonoBehaviour
      */
     public void InitDeath()
     {
+        setPlayerState(PlayerState.DEAD);
         // Gets a KillConfirmed object score value based on player's current score
         int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
         
@@ -192,62 +223,7 @@ public abstract class Player : MonoBehaviour
         timeToFreeze = 3.0f;
     }
 
-    protected abstract Material setMaterial(string id);
+    protected abstract Material setMaterial(PlayerState id);
 
     protected abstract void Shoot(string controllerNum);
-
-    /*
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")  // Enemy-Player Collisions
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-        }
-
-        if (collision.gameObject.tag == "Dot")  // Collisions with dot object
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-
-            FindObjectOfType<DynamicLevelMaker>().RemoveObject(collision.gameObject);
-
-            Score.setPlayerScore(gameObject, 1);
-
-        }
-
-        if (collision.gameObject.tag == "KillConfirm")
-        {
-            int scoreVal = collision.gameObject.GetComponent<Score>().ScoreVal;
-            FindObjectOfType<DynamicLevelMaker>().RemoveObject(collision.gameObject);
-            Score.setPlayerScore(gameObject, scoreVal);
-        }
-
-
-        if (collision.gameObject.tag == "Player")
-        {
-            Debug.Log("Holy shit dude, you killed him!");
-        }
-        else if (collision.gameObject.tag == "Enemy" && gameObject.tag != "Enemy")
-        {
-            int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
-            Score.setPlayerScore(gameObject, -scoreVal);
-            Score.setPlayerScore(collision.gameObject, scoreVal);
-            transform.position = originalPosition;
-            timeToFreeze = 3.0f;
-        }
-
-        Debug.Log("Player: " + playerScore + "  :  Enemy: " + enemyScore);
-        Debug.Log("Local " + (gameObject.tag == "Player" ? "Player" : "Enemy") + " Score: " + localScore);
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if ((collision.gameObject.tag == "Enemy" && gameObject.tag == "Player") 
-            || collision.gameObject.tag == "Dot" 
-            || collision.gameObject.tag == "KillConfirm")  // Allows enemies/players to interact with each other
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), false);
-        }
-    }
-*/
 }
