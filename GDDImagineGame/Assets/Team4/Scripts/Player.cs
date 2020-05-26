@@ -14,7 +14,8 @@ public abstract class Player : MonoBehaviour
     public int localScore;
 
     protected PlayerState playerState;
-    protected PlayerState lastPlayerState; 
+    protected PlayerState lastPlayerState;
+    public Alliance alliance;
 
     protected void Start()
     {
@@ -53,6 +54,11 @@ public abstract class Player : MonoBehaviour
         }
     }
 
+    public enum Alliance
+    {
+        ALLY,
+        ENEMY
+    }
     protected enum PlayerState
     {
         DEAD,
@@ -90,7 +96,8 @@ public abstract class Player : MonoBehaviour
 
         if (moveHorizontal >= 0.7f)
         {
-            if (Physics.Raycast(transform.position, Vector3.right, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global right raycast is colliding with a wall
+            if (Physics.Raycast(transform.position, Vector3.right, out hit, reach) 
+                && isWallCollision(hit))  // Checks if object global right raycast is colliding with a wall
             {
                 // Draws an active ray
                 Debug.DrawRay(transform.position, Vector3.right * hit.distance, Color.yellow);
@@ -110,7 +117,7 @@ public abstract class Player : MonoBehaviour
         }
         else if (moveHorizontal <= -0.7f)
         {
-            if (Physics.Raycast(transform.position, Vector3.left, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global left raycast is colliding with a wall
+            if (Physics.Raycast(transform.position, Vector3.left, out hit, reach) && isWallCollision(hit))  // Checks if object global left raycast is colliding with a wall
             {
                 // Draws an active ray
                 Debug.DrawRay(transform.position, Vector3.left * hit.distance, Color.yellow);
@@ -129,7 +136,7 @@ public abstract class Player : MonoBehaviour
         }
         else if (moveVertical >= 0.7f)
         {
-            if (Physics.Raycast(transform.position, Vector3.forward, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global forwards raycast is colliding with a wall
+            if (Physics.Raycast(transform.position, Vector3.forward, out hit, reach) && isWallCollision(hit))  // Checks if object global forwards raycast is colliding with a wall
             {
                 // Draws an active ray
                 Debug.DrawRay(transform.position, Vector3.forward * hit.distance, Color.yellow);
@@ -148,7 +155,7 @@ public abstract class Player : MonoBehaviour
         }
         else if (moveVertical <= -0.7f)
         {
-            if (Physics.Raycast(transform.position, Vector3.back, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global backwards raycast is colliding with a wall
+            if (Physics.Raycast(transform.position, Vector3.back, out hit, reach) && isWallCollision(hit))  // Checks if object global backwards raycast is colliding with a wall
             {
                 // Draws an active ray
                 Debug.DrawRay(transform.position, Vector3.back * hit.distance, Color.yellow);
@@ -167,6 +174,12 @@ public abstract class Player : MonoBehaviour
         }
 
         transform.Translate(currentMove, Space.World);  // Player position is updated
+    }
+
+    private bool isWallCollision(RaycastHit hit)
+    {
+        return hit.transform.tag.Equals("wall") || (hit.transform.tag.Equals("Barrier") 
+            && !hit.collider.GetComponent<Barrier>().alliance.Equals(this.alliance));
     }
 
     // Death and scoring vvvv

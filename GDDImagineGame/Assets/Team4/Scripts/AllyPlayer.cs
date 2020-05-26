@@ -26,6 +26,7 @@ public class AllyPlayer : Player
         NextFire = 0.0f;
         FireRange = 4.0f;
 
+        alliance = Alliance.ALLY;
         base.Start();
     }
     protected void OnTriggerEnter(Collider collider)

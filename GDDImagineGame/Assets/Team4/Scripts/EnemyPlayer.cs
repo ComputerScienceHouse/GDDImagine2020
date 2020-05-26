@@ -13,6 +13,7 @@ public class EnemyPlayer : Player
     protected void Start()
     {
         EnemyScore = 0;
+        alliance = Alliance.ENEMY;
         base.Start();
     }
     protected void OnTriggerEnter(Collider collider)

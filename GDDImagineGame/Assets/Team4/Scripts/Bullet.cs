@@ -38,6 +38,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        
         switch (collider.gameObject.tag)
         {
             case "wall":
@@ -45,6 +46,12 @@ public class Bullet : MonoBehaviour
                 break;
             case "Enemy":
                 collider.GetComponent<EnemyPlayer>().InitDeath();
+                break;
+            case "Barrier":
+                if (!collider.GetComponent<Barrier>().alliance.Equals(owner.alliance))
+                {
+                    Destroy(gameObject);
+                }
                 break;
             default:
                 break;

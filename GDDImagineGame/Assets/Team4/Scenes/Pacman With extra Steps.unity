@@ -153,6 +153,8 @@ MonoBehaviour:
     type: 3}
   FloorPrefab: {fileID: 3260498230617442092, guid: d96cb58889e415c42ae8f3fbb914cd8c,
     type: 3}
+  BarrierPrefab: {fileID: 3260498230617442092, guid: 1b8b55029518a5e43a70bcd632205645,
+    type: 3}
   PlayerPrefab: {fileID: 4116955780822573986, guid: ab40b123ce265364aae3d0d6468a4b98,
     type: 3}
   EnemyPrefab: {fileID: 8630247412921911464, guid: 36abdfd0338a46a409bbc26e5912f7f3,

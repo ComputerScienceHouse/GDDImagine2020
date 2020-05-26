@@ -12,6 +12,9 @@ public class DynamicLevelMaker : MonoBehaviour
     private GameObject FloorPrefab;
 
     [SerializeField]
+    private GameObject BarrierPrefab;
+
+    [SerializeField]
     public GameObject PlayerPrefab;
 
     [SerializeField]
@@ -89,6 +92,16 @@ public class DynamicLevelMaker : MonoBehaviour
 
                             player.joystickNumber = currentController;
                             currentController++;
+                            break;
+                        // Add Ally Barrier to the scene
+                        case 'a':
+                            objects[i, j] = Instantiate(BarrierPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
+                            objects[i, j].GetComponent<Barrier>().setAlliance(Player.Alliance.ALLY);
+                            break;
+                        // Add Enemy Barrier to the scene
+                        case 'e':
+                            objects[i, j] = Instantiate(BarrierPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
+                            objects[i, j].GetComponent<Barrier>().setAlliance(Player.Alliance.ENEMY);
                             break;
                         // Big uhoh
                         default:
