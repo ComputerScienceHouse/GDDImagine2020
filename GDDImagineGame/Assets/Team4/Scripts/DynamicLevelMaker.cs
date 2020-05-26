@@ -29,7 +29,7 @@ public class DynamicLevelMaker : MonoBehaviour
     [SerializeField]
     private GameObject KillConfirmedPrefab;
 
-    private GameObject[,] objects;
+    public GameObject[,] objects;
     private IDictionary<int, List<GameObject>> teleporters;
     //private GameObject floor;
     //private DeviceManager manager;
@@ -110,6 +110,8 @@ public class DynamicLevelMaker : MonoBehaviour
                             break;
                         case 'T':
                             objects[i, j] = Instantiate(TeleporterPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
+                            //objects[i, j].GetComponent<Teleporter>().coordinateX = i;
+                            //objects[i, j].GetComponent<Teleporter>().coordinateY = j;
                             int pairId = objects[i, j].GetComponent<Teleporter>().pairId;
                             if (!teleporters.ContainsKey(pairId))
                             {

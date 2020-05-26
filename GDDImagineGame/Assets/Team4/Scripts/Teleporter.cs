@@ -9,6 +9,8 @@ public class Teleporter : MonoBehaviour
     public int id;
     public GameObject partner;
     public List<GameObject> fromPartner;
+    //public int coordinateX;
+    //public int coordinateY;
     // Start is called before the first frame update
     void Start()
     {
