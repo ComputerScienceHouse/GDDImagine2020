@@ -52,6 +52,8 @@ public abstract class Player : MonoBehaviour
 
         currentMove = Vector3.zero;  // If player is not moving and has not hit a wall, the default movement vector is 0
 
+        Shoot(num); // Abstract method
+
         if (moveHorizontal >= 0.7f)
         {
             if (Physics.Raycast(transform.position, Vector3.right, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global right raycast is colliding with a wall
@@ -72,7 +74,6 @@ public abstract class Player : MonoBehaviour
 
             transform.rotation = Quaternion.LookRotation(Vector3.right);  // Player facing direction is updated to right
         }
-
         else if (moveHorizontal <= -0.7f)
         {
             if (Physics.Raycast(transform.position, Vector3.left, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global left raycast is colliding with a wall
@@ -92,7 +93,6 @@ public abstract class Player : MonoBehaviour
 
             transform.rotation = Quaternion.LookRotation(Vector3.left);  // Player facing direction is updated to left
         }
-
         else if (moveVertical >= 0.7f)
         {
             if (Physics.Raycast(transform.position, Vector3.forward, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global forwards raycast is colliding with a wall
@@ -112,7 +112,6 @@ public abstract class Player : MonoBehaviour
 
             transform.rotation = Quaternion.LookRotation(Vector3.forward);  // Player facing direction is updated to forwards
         }
-
         else if (moveVertical <= -0.7f)
         {
             if (Physics.Raycast(transform.position, Vector3.back, out hit, reach) && hit.transform.tag == "wall")  // Checks if object global backwards raycast is colliding with a wall
@@ -171,7 +170,7 @@ public abstract class Player : MonoBehaviour
      * points based on their current score. They are respawned and
      * immobilized for 3 seconds.
      */
-    protected void InitDeath()
+    public void InitDeath()
     {
         // Gets a KillConfirmed object score value based on player's current score
         int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
@@ -188,6 +187,8 @@ public abstract class Player : MonoBehaviour
         // Death timer
         timeToFreeze = 3.0f;
     }
+
+    protected abstract void Shoot(string controllerNum);
 
     /*
     private void OnCollisionEnter(Collision collision)

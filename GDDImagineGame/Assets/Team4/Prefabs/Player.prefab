@@ -53,6 +53,9 @@ MonoBehaviour:
   timeToFreeze: 0
   joystickNumber: 0
   localScore: 0
+  FireRate: 0
+  BulletPrefab: {fileID: 9019853323103209182, guid: ec61945a2589ff942aae62e42578a87a,
+    type: 3}
 --- !u!33 &4116955780822574040
 MeshFilter:
   m_ObjectHideFlags: 0

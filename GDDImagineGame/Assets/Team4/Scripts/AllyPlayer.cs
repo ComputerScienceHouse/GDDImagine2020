@@ -6,10 +6,22 @@ using UnityEngine;
 public class AllyPlayer : Player
 {
     private static int AllyScore;
+    
+    public float fireRate;
+    public float nextFire;
+    public float fireRange;
+
+    [SerializeField]
+    private GameObject BulletPrefab;
 
     protected void Start()
     {
         AllyScore = 0;
+
+        fireRate = 2.0f;
+        nextFire = 0.0f;
+        fireRange = 3.0f;
+
         base.Start();
     }
     protected void OnTriggerEnter(Collider collider)
@@ -35,6 +47,24 @@ public class AllyPlayer : Player
             default:
                 base.OnTriggerEnter(collider);
                 break;
+        }
+    }
+
+    protected override void Shoot(string controllerNum)
+    {
+        float fire = Input.GetAxisRaw($"RightTrigger_P{controllerNum}");
+
+        if (fire >= 0.3f && Time.time > nextFire && /*localScore*/AllyScore > 0)
+        {
+            float startTime = Time.time;
+
+            nextFire = Time.time + ( 1 / fireRate ); // 1/FireRate gives period of shots
+            Debug.Log("FIRE!");
+            GameObject bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
+            bullet.GetComponent<Bullet>().setOwner(this);
+            AllyScore--;//localScore--;
+            //Transform bulletTransform = bullet.GetComponent<Transform>();
+            //bulletTransform.position = Vector3.Lerp(transform.position, transform.forward * 10, 100);
         }
     }
 }

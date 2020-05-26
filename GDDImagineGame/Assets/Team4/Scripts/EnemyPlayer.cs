@@ -22,12 +22,11 @@ public class EnemyPlayer : Player
             case "Player":
                 //Ally death handled in AllyPlayer.cs
                 break;
+            case "Bullet":
+                //Death handled by bullet
             case "KillConfirm":
                 EnemyScore += KillConfirm(collider);
                 Debug.Log("EnemyScore: " + EnemyScore);
-                break;
-            case "Bullet":
-                InitDeath();
                 break;
             case "Dot":
                 EnemyScore += 1;
@@ -38,4 +37,6 @@ public class EnemyPlayer : Player
                 break;
         }
     }
+
+    protected override void Shoot(string controllerNum) { /* Enemy cannot shoot */ }
 }
