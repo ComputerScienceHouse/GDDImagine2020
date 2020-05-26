@@ -11,6 +11,9 @@ public class AllyPlayer : Player
     public float nextFire;
     public float fireRange;
 
+    public Material LIVE_MATERIAL;
+    public Material DEAD_MATERIAL;
+
     [SerializeField]
     private GameObject BulletPrefab;
 
@@ -20,7 +23,7 @@ public class AllyPlayer : Player
 
         fireRate = 2.0f;
         nextFire = 0.0f;
-        fireRange = 3.0f;
+        fireRange = 4.0f;
 
         base.Start();
     }
@@ -50,6 +53,16 @@ public class AllyPlayer : Player
         }
     }
 
+    protected override Material setMaterial(string id)
+    {
+        if (id.Equals("dead"))
+        {
+            return DEAD_MATERIAL;
+        } else
+        {
+            return LIVE_MATERIAL;
+        }
+    }
     protected override void Shoot(string controllerNum)
     {
         float fire = Input.GetAxisRaw($"RightTrigger_P{controllerNum}");

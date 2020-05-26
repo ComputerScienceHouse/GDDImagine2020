@@ -28,10 +28,14 @@ public abstract class Player : MonoBehaviour
     {
         if (timeToFreeze > 0)
         {
+            //Sets object material to dead texture
+            gameObject.GetComponent<MeshRenderer>().material = setMaterial("dead");
             timeToFreeze -= Time.deltaTime;
         } 
         else
         {
+            //Sets object material to alive texture
+            gameObject.GetComponent<MeshRenderer>().material = setMaterial("alive");
             playerControl();
         }
     }
@@ -187,6 +191,8 @@ public abstract class Player : MonoBehaviour
         // Death timer
         timeToFreeze = 3.0f;
     }
+
+    protected abstract Material setMaterial(string id);
 
     protected abstract void Shoot(string controllerNum);
 

@@ -125,6 +125,8 @@ MonoBehaviour:
   timeToFreeze: 0
   joystickNumber: 0
   localScore: 0
+  LIVE_MATERIAL: {fileID: 2100000, guid: 7506efcb7d0fed54091163d9263bdccc, type: 2}
+  DEAD_MATERIAL: {fileID: 2100000, guid: d689e2f8482e28a4ca7b769ed13cf636, type: 2}
 --- !u!54 &8630247412921911471
 Rigidbody:
   m_ObjectHideFlags: 0

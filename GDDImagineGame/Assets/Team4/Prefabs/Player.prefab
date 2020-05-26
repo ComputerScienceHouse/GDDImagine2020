@@ -53,7 +53,11 @@ MonoBehaviour:
   timeToFreeze: 0
   joystickNumber: 0
   localScore: 0
-  FireRate: 0
+  fireRate: 0
+  nextFire: 0
+  fireRange: 0
+  LIVE_MATERIAL: {fileID: 2100000, guid: 9d5be7b64114fb54b865f48a1c379e23, type: 2}
+  DEAD_MATERIAL: {fileID: 2100000, guid: e49d4f84c60af734788e8d1c4d72f6bf, type: 2}
   BulletPrefab: {fileID: 9019853323103209182, guid: ec61945a2589ff942aae62e42578a87a,
     type: 3}
 --- !u!33 &4116955780822574040

@@ -7,6 +7,9 @@ public class EnemyPlayer : Player
 {
     private static int EnemyScore;
 
+    public Material LIVE_MATERIAL;
+    public Material DEAD_MATERIAL;
+
     protected void Start()
     {
         EnemyScore = 0;
@@ -38,5 +41,16 @@ public class EnemyPlayer : Player
         }
     }
 
+    protected override Material setMaterial(string id)
+    {
+        if (id.Equals("dead"))
+        {
+            return DEAD_MATERIAL;
+        }
+        else
+        {
+            return LIVE_MATERIAL;
+        }
+    }
     protected override void Shoot(string controllerNum) { /* Enemy cannot shoot */ }
 }
