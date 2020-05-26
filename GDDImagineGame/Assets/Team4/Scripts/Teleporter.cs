@@ -8,11 +8,13 @@ public class Teleporter : MonoBehaviour
     public int pairId;
     public int id;
     public GameObject partner;
+    public List<GameObject> fromPartner;
     // Start is called before the first frame update
     void Start()
     {
         // Assigns partner value based on spawn order
         // We should change this to read teleporter pairs from a file;
+        fromPartner = new List<GameObject>();
         numTeleporters++;
         pairId = (int)System.Math.Ceiling(numTeleporters / 2);
         id = (int)numTeleporters;
@@ -21,18 +23,33 @@ public class Teleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        switch(other.gameObject.tag)
-        {
-            case "Enemy":
-            case "Player":
-                other.gameObject.transform.position = partner.GetComponent<Collider>().transform.position + new Vector3(0, 0.5f, 0);
-                break;
-            default:
-                break;
+        Debug.Log(other);
+        if (!fromPartner.Contains(other.gameObject)) {
+            switch (other.gameObject.tag)
+            {
+                case "Enemy":
+                case "Player":
+                    teleport(other.gameObject);
+                    break;
+                default:
+                    break;
+            }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        fromPartner.Remove(other.gameObject);
+    }
+
+    private void teleport(GameObject player)
+    {
+        partner.GetComponent<Teleporter>().fromPartner.Add(player);
+        player.transform.position = partner.GetComponent<Collider>().transform.position + new Vector3(0, 0.5f, 0);
     }
 }
