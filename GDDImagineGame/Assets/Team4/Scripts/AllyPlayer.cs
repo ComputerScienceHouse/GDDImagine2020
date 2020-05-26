@@ -54,7 +54,7 @@ public class AllyPlayer : Player
     {
         float fire = Input.GetAxisRaw($"RightTrigger_P{controllerNum}");
 
-        if (fire >= 0.3f && Time.time > nextFire && /*localScore*/AllyScore > 0)
+        if (fire >= 0.3f && Time.time > nextFire && localScore > 0 && AllyScore > 0)
         {
             float startTime = Time.time;
 
@@ -62,7 +62,8 @@ public class AllyPlayer : Player
             Debug.Log("FIRE!");
             GameObject bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().setOwner(this);
-            AllyScore--;//localScore--;
+            AllyScore--;
+            localScore--;
             //Transform bulletTransform = bullet.GetComponent<Transform>();
             //bulletTransform.position = Vector3.Lerp(transform.position, transform.forward * 10, 100);
         }
