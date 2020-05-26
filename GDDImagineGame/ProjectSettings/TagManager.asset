@@ -11,6 +11,7 @@ TagManager:
   - KillConfirm
   - Barrier
   - Bullet
+  - Teleporter
   layers:
   - Default
   - TransparentFX

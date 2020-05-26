@@ -30,7 +30,8 @@ public class DynamicLevelMaker : MonoBehaviour
     private GameObject KillConfirmedPrefab;
 
     private GameObject[,] objects;
-    private GameObject floor;
+    private IDictionary<int, List<GameObject>> teleporters;
+    //private GameObject floor;
     //private DeviceManager manager;
 
     public int scale;
@@ -56,6 +57,7 @@ public class DynamicLevelMaker : MonoBehaviour
             int currentController = 0;
 
             objects = new GameObject[width, height];
+            teleporters = new Dictionary<int, List<GameObject>>();
 
             for (int j = 0; j < height; j++)
             {
@@ -108,6 +110,16 @@ public class DynamicLevelMaker : MonoBehaviour
                             break;
                         case 'T':
                             objects[i, j] = Instantiate(TeleporterPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
+                            int pairId = objects[i, j].GetComponent<Teleporter>().pairId;
+                            if (!teleporters.ContainsKey(pairId))
+                            {
+                                teleporters.Add(pairId, new List<GameObject>(2));
+                            }
+                            // list is created if it doesnt already exist
+                            if (teleporters[pairId].Count < 2)
+                            {
+                                teleporters[pairId].Add(objects[i, j]);
+                            }
                             break;
                         // Big uhoh
                         default:
@@ -116,14 +128,29 @@ public class DynamicLevelMaker : MonoBehaviour
                     }
                 }
             }
-
             roomReader.Close();
+            InitTeleporters();
         }
         catch (System.Exception e)
         {
             Debug.Log(Application.dataPath);
             Debug.Log(e.Message);
             //TODO: Here we should just make a default room
+        }
+    }
+
+    public void InitTeleporters()
+    {
+        foreach (int pairId in teleporters.Keys)
+        {
+            List<GameObject> pairList = teleporters[pairId];
+            if (pairList != null && pairList.Count == 2)
+            {
+                GameObject t1 = pairList[0];
+                GameObject t2 = pairList[1];
+                t1.GetComponent<Teleporter>().partner = t2;
+                t2.GetComponent<Teleporter>().partner = t1;
+            }
         }
     }
 

@@ -3,7 +3,7 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 XPa........................eEX
 Xaa........................eeX
-X..........DDDDDDDDDDDD......X
+X........DDDDDDDDDDDD........X
 X............................X
 X............................X
 X........XXXXXXXXXXXX........X

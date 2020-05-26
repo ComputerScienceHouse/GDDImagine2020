@@ -155,6 +155,8 @@ MonoBehaviour:
     type: 3}
   BarrierPrefab: {fileID: 3260498230617442092, guid: 1b8b55029518a5e43a70bcd632205645,
     type: 3}
+  TeleporterPrefab: {fileID: 3260498230617442092, guid: 103eb5f463ed0c14fb5d40814005adde,
+    type: 3}
   PlayerPrefab: {fileID: 4116955780822573986, guid: ab40b123ce265364aae3d0d6468a4b98,
     type: 3}
   EnemyPrefab: {fileID: 8630247412921911464, guid: 36abdfd0338a46a409bbc26e5912f7f3,
