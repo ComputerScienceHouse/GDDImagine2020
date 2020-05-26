@@ -9,6 +9,7 @@ TagManager:
   - Dot
   - Floor
   - KillConfirm
+  - Barrer
   layers:
   - Default
   - TransparentFX

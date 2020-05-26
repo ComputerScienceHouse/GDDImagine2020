@@ -1,10 +1,9 @@
 30
-31
-----XXX----------------XXX----
-XXXXXPXXXXXXXXXXXXXXXXXXEXXXXX
+29
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XP..........................EX
 X............................X
-X............................X
-X...........DDDDDDDDDDD......X
+X..........DDDDDDDDDDDD......X
 X............................X
 X............................X
 X........XXXXXXXXXXXX........X
@@ -28,6 +27,5 @@ X............................X
 X............................X
 X............................X
 X............................X
-X............................X
-XXXXXEXXXXXXXXXXXXXXXXXXPXXXXX
-----XXX----------------XXX----
+XE..........................PX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
