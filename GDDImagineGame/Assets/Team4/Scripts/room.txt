@@ -14,7 +14,7 @@ X........DDDDDDDDDDDD........X
 X........XDXXXXXXXXDX........X
 X........XDDDDXXDDDDX........X
 XXXXXXXX.XXXXDXXDXXXX.XXXXXXXX
-.........XDDDDDDDDDDX.........
+T........XDDDDDDDDDDX........T
 XXXXXXXX.XDXXXDDXXXDX.XXXXXXXX
 X..........X......X..........X
 X..........XXXXXXXX..........X

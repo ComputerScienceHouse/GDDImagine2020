@@ -15,6 +15,9 @@ public class DynamicLevelMaker : MonoBehaviour
     private GameObject BarrierPrefab;
 
     [SerializeField]
+    private GameObject TeleporterPrefab;
+
+    [SerializeField]
     public GameObject PlayerPrefab;
 
     [SerializeField]
@@ -102,6 +105,9 @@ public class DynamicLevelMaker : MonoBehaviour
                         case 'e':
                             objects[i, j] = Instantiate(BarrierPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j].GetComponent<Barrier>().setAlliance(Player.Alliance.ENEMY);
+                            break;
+                        case 'T':
+                            objects[i, j] = Instantiate(TeleporterPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             break;
                         // Big uhoh
                         default:
