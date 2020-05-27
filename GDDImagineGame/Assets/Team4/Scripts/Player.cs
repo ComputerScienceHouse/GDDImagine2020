@@ -218,7 +218,8 @@ public abstract class Player : MonoBehaviour
      */
     public void InitDeath()
     {
-        setPlayerState(PlayerState.DEAD);
+        setPlayerState(PlayerState.DEAD)
+
         // Gets a KillConfirmed object score value based on player's current score
         int scoreVal = FindObjectOfType<DynamicLevelMaker>().KillConfirmed(transform.position, localScore);
 

@@ -24,7 +24,7 @@ public class AllyPlayer : Player
 
         FireRate = 2.0f;
         NextFire = 0.0f;
-        FireRange = 4.0f;
+        FireRange = 5.0f;
 
         alliance = Alliance.ALLY;
         base.Start();

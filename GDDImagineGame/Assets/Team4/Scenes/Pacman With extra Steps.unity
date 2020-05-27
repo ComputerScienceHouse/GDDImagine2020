@@ -157,6 +157,14 @@ MonoBehaviour:
     type: 3}
   TeleporterPrefab: {fileID: 3260498230617442092, guid: 103eb5f463ed0c14fb5d40814005adde,
     type: 3}
+  TopTeleporterPrefab: {fileID: 8181827826568022294, guid: 4de62664b92e16445b6d2f2cc566fe6e,
+    type: 3}
+  BottomTeleporterPrefab: {fileID: 6608210440942590434, guid: 5c4dabbc6ea4921448dc599cced36e9a,
+    type: 3}
+  LeftTeleporterPrefab: {fileID: 7973687221396159380, guid: 12d401632f805bd4b92fb792353f1752,
+    type: 3}
+  RightTeleporterPrefab: {fileID: 6359230604269673282, guid: 9222b4c3cbd722b4ca6f7e5af00849fb,
+    type: 3}
   PlayerPrefab: {fileID: 4116955780822573986, guid: ab40b123ce265364aae3d0d6468a4b98,
     type: 3}
   EnemyPrefab: {fileID: 8630247412921911464, guid: 36abdfd0338a46a409bbc26e5912f7f3,
@@ -166,7 +174,7 @@ MonoBehaviour:
   KillConfirmedPrefab: {fileID: 3016356661265341099, guid: 4f08adf0b1726224f8336fd32425af36,
     type: 3}
   scale: 1
-  roomName: room.txt
+  roomName: room
 --- !u!4 &268373785
 Transform:
   m_ObjectHideFlags: 0

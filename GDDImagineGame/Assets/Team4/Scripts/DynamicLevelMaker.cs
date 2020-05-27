@@ -18,6 +18,18 @@ public class DynamicLevelMaker : MonoBehaviour
     private GameObject TeleporterPrefab;
 
     [SerializeField]
+    private GameObject TopTeleporterPrefab;
+
+    [SerializeField]
+    private GameObject BottomTeleporterPrefab;
+
+    [SerializeField]
+    private GameObject LeftTeleporterPrefab;
+
+    [SerializeField]
+    private GameObject RightTeleporterPrefab;
+
+    [SerializeField]
     public GameObject PlayerPrefab;
 
     [SerializeField]
@@ -31,6 +43,7 @@ public class DynamicLevelMaker : MonoBehaviour
 
     public GameObject[,] objects;
     private IDictionary<int, List<GameObject>> teleporters;
+    private char[,] teleporterChars;
     //private GameObject floor;
     //private DeviceManager manager;
 
@@ -49,7 +62,7 @@ public class DynamicLevelMaker : MonoBehaviour
         //Try catch 
         try
         {
-            StreamReader roomReader = new StreamReader($"{Application.dataPath}/Team4/Scripts/{roomName}");
+            StreamReader roomReader = new StreamReader($"{Application.dataPath}/Team4/rooms/{roomName}/room.txt");
 
             string line;
             int width = int.Parse(roomReader.ReadLine());
@@ -57,7 +70,9 @@ public class DynamicLevelMaker : MonoBehaviour
             int currentController = 0;
 
             objects = new GameObject[width, height];
+            
             teleporters = new Dictionary<int, List<GameObject>>();
+            teleporterChars = new char[width, height];
 
             for (int j = 0; j < height; j++)
             {
@@ -108,10 +123,18 @@ public class DynamicLevelMaker : MonoBehaviour
                             objects[i, j] = Instantiate(BarrierPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
                             objects[i, j].GetComponent<Barrier>().setAlliance(Player.Alliance.ENEMY);
                             break;
+                        // Add wall teleporting pad
+                        case 't':
+                            // Ignore for the time being
+                            // Teleporters are placed later
+                            teleporterChars[i, j] = 't';
+                            break;
+                        // Add floor teleporting pad
+                        /*
                         case 'T':
                             objects[i, j] = Instantiate(TeleporterPrefab, new Vector3((scale * i), 0, (scale * j)), Quaternion.identity);
-                            //objects[i, j].GetComponent<Teleporter>().coordinateX = i;
-                            //objects[i, j].GetComponent<Teleporter>().coordinateY = j;
+                            objects[i, j].GetComponent<Teleporter>().coordinateX = i;
+                            objects[i, j].GetComponent<Teleporter>().coordinateY = j;
                             int pairId = objects[i, j].GetComponent<Teleporter>().pairId;
                             if (!teleporters.ContainsKey(pairId))
                             {
@@ -123,6 +146,7 @@ public class DynamicLevelMaker : MonoBehaviour
                                 teleporters[pairId].Add(objects[i, j]);
                             }
                             break;
+                            */
                         // Big uhoh
                         default:
                             objects[i, j] = new GameObject();
@@ -130,8 +154,11 @@ public class DynamicLevelMaker : MonoBehaviour
                     }
                 }
             }
+
             roomReader.Close();
-            InitTeleporters();
+
+            spawnTeleporters();
+            //InitTeleporters();
         }
         catch (System.Exception e)
         {
@@ -141,6 +168,105 @@ public class DynamicLevelMaker : MonoBehaviour
         }
     }
 
+    public void spawnTeleporters()
+    {
+        StreamReader teleportersReader = new StreamReader($"{Application.dataPath}/Team4/rooms/{roomName}/teleporters.txt");
+
+        string line;
+        while ((line = teleportersReader.ReadLine()) != null)
+        {
+            string[] teleporterInfo;
+            // Checks if line is a comment
+            if (line.Length != 0)
+            {
+                // '#' denotes a comment in the file
+                if (line[0].Equals('#'))
+                {
+                    Debug.Log("This is a comment");
+                    continue;
+                }
+            } 
+            else
+            {
+                continue;
+            }
+            teleporterInfo = line.Split(' ');
+            // Checks if teleporterInfo is valid
+            if (!checkTeleporterInfo(teleporterInfo))
+            {
+                // Teleporter pair info was invalid
+                // Moving onto the next teleporter pair
+                // room file needs fixing! (We should create an error log file)
+                continue;
+            }
+            List<GameObject> pair = new List<GameObject>(2);
+            GameObject t1;
+            GameObject t2;
+            int x1 = System.Int32.Parse(teleporterInfo[2]);
+            int x2 = System.Int32.Parse(teleporterInfo[4]);
+            int y1 = System.Int32.Parse(teleporterInfo[3]);
+            int y2 = System.Int32.Parse(teleporterInfo[5]);
+            switch (teleporterInfo[1])
+            {
+                case "H":
+                    t1 = Instantiate(LeftTeleporterPrefab, new Vector3((scale * x1), 0, (scale * y1)), Quaternion.identity);
+                    t1.GetComponent<Teleporter>().teleporterType = Teleporter.TeleporterType.LEFT_WALL;
+                    t2 = Instantiate(RightTeleporterPrefab, new Vector3((scale * x2), 0, (scale * y2)), Quaternion.identity);
+                    t2.GetComponent<Teleporter>().teleporterType = Teleporter.TeleporterType.RIGHT_WALL;
+                    break;
+                case "V":
+                    t1 = Instantiate(TopTeleporterPrefab, new Vector3((scale * x1), 0, (scale * y1)), Quaternion.identity);
+                    t1.GetComponent<Teleporter>().teleporterType = Teleporter.TeleporterType.TOP_WALL;
+                    t2 = Instantiate(BottomTeleporterPrefab, new Vector3((scale * x2), 0, (scale * y2)), Quaternion.identity);
+                    t2.GetComponent<Teleporter>().teleporterType = Teleporter.TeleporterType.BOTTOM_WALL;
+                    break;
+                case "P":
+                    t1 = Instantiate(TeleporterPrefab, new Vector3((scale * x1), 0, (scale * y1)), Quaternion.identity);
+                    t1.GetComponent<Teleporter>().teleporterType = Teleporter.TeleporterType.PLATFORM;
+                    t2 = Instantiate(TeleporterPrefab, new Vector3((scale * x2), 0, (scale * y2)), Quaternion.identity);
+                    t2.GetComponent<Teleporter>().teleporterType = Teleporter.TeleporterType.PLATFORM;
+                    break;
+                default:
+                    // will never get here due to prior fail-safe check
+                    t1 = new GameObject();
+                    t2 = new GameObject();
+                    break;
+            }
+            objects[x1, y1] = t1;
+            objects[x2, y2] = t2;
+            pair.Add(t1);
+            pair.Add(t2);
+            teleporters.Add(System.Int32.Parse(teleporterInfo[0]), pair);
+            Debug.Log(line);
+        }
+        InitTeleporters();
+
+        teleportersReader.Close();
+    }
+
+    private bool checkTeleporterInfo(string[] teleporterInfo)
+    {
+        try
+        {
+            if (teleporterInfo.Length != 6)
+                throw new System.Exception("Invalid teleporter info");
+            int pairId = System.Int32.Parse(teleporterInfo[0]);
+            string orientation = teleporterInfo[1];
+            int x1 = System.Int32.Parse(teleporterInfo[2]);
+            int x2 = System.Int32.Parse(teleporterInfo[4]);
+            int y1 = System.Int32.Parse(teleporterInfo[3]);
+            int y2 = System.Int32.Parse(teleporterInfo[5]);
+
+            if (!(orientation.Equals("H") || orientation.Equals("V") || orientation.Equals("P")) 
+                || teleporterChars[x1, y1] != 't' || teleporterChars[x2, y2] != 't')
+                throw new System.Exception("Invalid orientation type");
+            return true;
+        } 
+        catch (System.Exception e)
+        {
+            return false;
+        }
+    }
     public void InitTeleporters()
     {
         foreach (int pairId in teleporters.Keys)
