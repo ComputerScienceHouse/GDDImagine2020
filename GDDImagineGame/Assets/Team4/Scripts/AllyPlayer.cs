@@ -18,7 +18,7 @@ public class AllyPlayer : Player
     private GameObject BulletPrefab;
 
 
-    protected void Start()
+    protected new void Start()
     {
         AllyScore = 0;
 

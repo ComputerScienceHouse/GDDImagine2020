@@ -10,7 +10,7 @@ public class EnemyPlayer : Player
     public Material LIVE_MATERIAL;
     public Material DEAD_MATERIAL;
 
-    protected void Start()
+    protected new void Start()
     {
         EnemyScore = 0;
         alliance = Alliance.ENEMY;
