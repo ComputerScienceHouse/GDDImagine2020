@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     /// Number of frames in between the spawning of balloon waves
     /// </summary>
     public int spawnRate;
-    Random rand = new Random();
+    //Random rand;
     List<GameObject> balloonList;
     List<GameObject> obstacleList;
     Vector3 spawnPoint;
@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
         spawnPoint = new Vector3(-10, 100, 0);
         balloonList = new List<GameObject>();
         obstacleList = new List<GameObject>();
+        //rand = new Random();
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class Spawner : MonoBehaviour
 
         // Randomly also spawns obstacles
         // All the code I added in last commit is probably bugged but we're pushing during a meeting yeet
-        obstChance = rand.RandomRange(0.00f, 10.00f);
+        float obstChance = Random.Range(0.00f, 10.00f);
         if(obstChance < 0.15f){
             if (spawnPoint.x > 10)
             {
