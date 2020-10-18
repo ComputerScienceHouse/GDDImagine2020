@@ -54,6 +54,7 @@ public class DynamicLevelMaker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.LogError(Input.GetJoystickNames());
         rand = new System.Random();
         //manager = new DeviceManager();
         //manager.AddPressed(new PressedDel(SlowPlayers), "D0", "P0");
