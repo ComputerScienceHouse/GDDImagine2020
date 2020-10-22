@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         // Initialize player vars
-        Score = 0;
+        Score = 10;
         Choice = Choice.None;
     }
 
