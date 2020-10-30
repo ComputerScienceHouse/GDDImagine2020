@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 // Enumeration of the actions a player can take in a round
 public enum Choice
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     public KeyCode blockButton;
     public KeyCode stealLeft;
     public KeyCode stealRight;
+
+    public Text readyText;
+
+    public Manager manager;
 
 
     //Player Properties
@@ -59,7 +64,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        PlayerAction();
+        if (manager.Timer != 0)
+        {
+            PlayerAction();
+        }
+
+        if (manager.Timer == 0)
+        {
+            readyText.enabled = false;
+        }
     }
 
     ///
@@ -75,17 +88,20 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log(name + " is going for main pot");
                 Choice = Choice.Pot;
+                readyText.enabled = true;
             }
             // Player wants to go for a steal, handle who they're trying to steal from
             else if (Input.GetKeyDown(stealLeft))
             {
                 Debug.Log(name + " is stealing from the player to the left of them");
                 Choice = Choice.StealLeft;
+                readyText.enabled = true;
             }
             else if (Input.GetKeyDown(stealRight))
             {
                 Debug.Log(name + " is stealing from the player to the right of them");
                 Choice = Choice.StealRight;
+                readyText.enabled = true;
             }
 
             // Player wants to block
@@ -93,6 +109,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log(name + " is blocking");
                 Choice = Choice.Block;
+                readyText.enabled = true;
             }
         }
     }
