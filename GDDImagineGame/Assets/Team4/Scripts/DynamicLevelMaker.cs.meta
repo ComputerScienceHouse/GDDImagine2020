@@ -8,11 +8,27 @@ MonoImporter:
       type: 3}
   - FloorPrefab: {fileID: 3260498230617442092, guid: d96cb58889e415c42ae8f3fbb914cd8c,
       type: 3}
+  - BarrierPrefab: {fileID: 3260498230617442092, guid: 1b8b55029518a5e43a70bcd632205645,
+      type: 3}
+  - TeleporterPrefab: {fileID: 3260498230617442092, guid: 103eb5f463ed0c14fb5d40814005adde,
+      type: 3}
+  - TopTeleporterPrefab: {fileID: 8181827826568022294, guid: 4de62664b92e16445b6d2f2cc566fe6e,
+      type: 3}
+  - BottomTeleporterPrefab: {fileID: 6608210440942590434, guid: 5c4dabbc6ea4921448dc599cced36e9a,
+      type: 3}
+  - LeftTeleporterPrefab: {fileID: 7973687221396159380, guid: 12d401632f805bd4b92fb792353f1752,
+      type: 3}
+  - RightTeleporterPrefab: {fileID: 6359230604269673282, guid: 9222b4c3cbd722b4ca6f7e5af00849fb,
+      type: 3}
   - PlayerPrefab: {fileID: 4116955780822573986, guid: ab40b123ce265364aae3d0d6468a4b98,
       type: 3}
   - EnemyPrefab: {fileID: 8630247412921911464, guid: 36abdfd0338a46a409bbc26e5912f7f3,
       type: 3}
   - DotPrefab: {fileID: 4501752342189233994, guid: e42ab8e10888880499d27a8d53d290d5,
+      type: 3}
+  - SpeedIncrPUPrefab: {fileID: 4110693538490855518, guid: 9978634311304ca4fa0c712bf346605f,
+      type: 3}
+  - SpeedReducPUPrefab: {fileID: 6170098728828537040, guid: 8beecc3c5e004a843af532037de0c28f,
       type: 3}
   - KillConfirmedPrefab: {fileID: 3016356661265341099, guid: 4f08adf0b1726224f8336fd32425af36,
       type: 3}

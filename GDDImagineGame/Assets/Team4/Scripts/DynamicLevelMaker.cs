@@ -39,6 +39,12 @@ public class DynamicLevelMaker : MonoBehaviour
     private GameObject DotPrefab;
 
     [SerializeField]
+    private GameObject SpeedIncrPUPrefab;
+
+    [SerializeField]
+    private GameObject SpeedReducPUPrefab;
+
+    [SerializeField]
     private GameObject KillConfirmedPrefab;
 
     public GameObject[,] objects;
@@ -268,6 +274,7 @@ public class DynamicLevelMaker : MonoBehaviour
             return false;
         }
     }
+    
     public void InitTeleporters()
     {
         foreach (int pairId in teleporters.Keys)

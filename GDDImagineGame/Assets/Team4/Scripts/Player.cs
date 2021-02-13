@@ -13,6 +13,8 @@ public abstract class Player : MonoBehaviour
 
     public int localScore;
 
+    private bool hasPowerup;
+
     protected PlayerState playerState;
     protected PlayerState lastPlayerState;
     public Alliance alliance;
@@ -24,13 +26,31 @@ public abstract class Player : MonoBehaviour
         playerState = PlayerState.ALIVE;
         lastPlayerState = PlayerState.ALIVE;
 
+        hasPowerup = false; // players start with no powerups
+
         speed = 10.0f;
         defaultSpeed = 10.0f;
         currentMove = Vector3.zero;
         this.originalPosition = this.gameObject.transform.position;
         timeToFreeze = 0.0f;
     }
- 
+
+    public void setSpeed(float newSpeed) {
+        speed = newSpeed;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setHasPowerup(bool newHasPowerup) {
+        hasPowerup = newHasPowerup;
+    }
+
+    public bool getHasPowerup() {
+        return hasPowerup;
+    }
+
     protected void FixedUpdate()
     {
         if (timeToFreeze > 0)

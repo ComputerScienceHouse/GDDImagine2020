@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -171,6 +172,8 @@ MonoBehaviour:
     type: 3}
   DotPrefab: {fileID: 4501752342189233994, guid: e42ab8e10888880499d27a8d53d290d5,
     type: 3}
+  SpeedIncrPUPrefab: {fileID: 0}
+  SpeedReducPUPrefab: {fileID: 0}
   KillConfirmedPrefab: {fileID: 3016356661265341099, guid: 4f08adf0b1726224f8336fd32425af36,
     type: 3}
   scale: 1
