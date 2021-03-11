@@ -7,7 +7,8 @@ public enum Element
 	blank,
 	obstacle,
 	coin,
-	powerup
+	powerup,
+    physicalobstacle,
 }
 
 public class RandomLevelGenerator : MonoBehaviour
@@ -18,6 +19,7 @@ public class RandomLevelGenerator : MonoBehaviour
 	public GameObject obstaclePrefab;
 	public GameObject coinPrefab;
 	public GameObject powerupPrefab;
+    public GameObject physicalobstaclePrefab;
 	public Element[,] generation;
 	public int width;
 	public int length;
@@ -29,9 +31,10 @@ public class RandomLevelGenerator : MonoBehaviour
 	public float obstaclePercent;
 	public float coinPercent;
 	public float powerupPercent;
+    public float physicalobstaclePercent;
 
-	// Start is called before the first frame update
-	void Start()
+    // Start is called before the first frame update
+    void Start()
 	{
 		float totalWidth = widthStart + (widthSpread * width);
 		float totalLength = lengthStart + (lengthSpread * length);
@@ -105,6 +108,26 @@ public class RandomLevelGenerator : MonoBehaviour
 								h + lengthStart + (h * lengthSpread)),
 							Quaternion.identity);
 						break;
+                    //Instantiate a phsyical obstacle gameObject in the scene
+                    case Element.physicalobstacle:
+                        Instantiate(
+                            physicalobstaclePrefab,
+                            new Vector3(
+                                w + widthStart + (w * widthSpread),
+                                0.5f,
+                                h + lengthStart + (h * lengthSpread)),
+                            Quaternion.identity);
+                        int size = Random.Range(1, 3);
+                        switch (size)
+                        {
+                            case 1:
+                                physicalobstaclePrefab.transform.localScale = new Vector3(3, 1, 1);
+                                break;
+                            case 2:
+                                physicalobstaclePrefab.transform.localScale = new Vector3(1, 10, 1);
+                                break;
+                        }
+                        break;
 				}
 			}
 		}
@@ -133,14 +156,16 @@ public class RandomLevelGenerator : MonoBehaviour
 		Element randElement;
 		float randNum = Random.Range(0.0f, 100.0f);
 
-		if(randNum <= blankPercent)                                         // % to spawn blank (nothing)
-			randElement = Element.blank;
-		else if(randNum <= blankPercent + obstaclePercent)                  // % to spawn an obstacle gameObject
-			randElement = Element.obstacle;
-		else if(randNum <= blankPercent + obstaclePercent + coinPercent)    // % to spawn a coin gameObject
-			randElement = Element.coin;
-		else                                                                // % to spawn a powerup gameObject
-			randElement = Element.powerup;
+        if (randNum <= blankPercent)                                         // % to spawn blank (nothing)
+            randElement = Element.blank;
+        else if (randNum <= blankPercent + obstaclePercent)                  // % to spawn an obstacle gameObject
+            randElement = Element.obstacle;
+        else if (randNum <= blankPercent + obstaclePercent + coinPercent)    // % to spawn a coin gameObject
+            randElement = Element.coin;
+        else if (randNum <= blankPercent + obstaclePercent + coinPercent + physicalobstaclePercent)  //%  to spawn physical obstacle gameObject
+            randElement = Element.physicalobstacle;
+        else                                                                // % to spawn a powerup gameObject
+            randElement = Element.powerup;
 
 		return randElement;
 	}

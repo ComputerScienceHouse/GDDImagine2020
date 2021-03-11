@@ -693,16 +693,19 @@ MonoBehaviour:
     type: 3}
   powerupPrefab: {fileID: 3274148874755390147, guid: 86753445081477240a6ee130f56da169,
     type: 3}
+  physicalobstaclePrefab: {fileID: 2053248097257253399, guid: 2e0dfc9619f795e4a9595dcd322fbd54,
+    type: 3}
   width: 25
   length: 50
   widthStart: 0
   lengthStart: 15
   widthSpread: 2
   lengthSpread: 10
-  blankPercent: 90
+  blankPercent: 86
   obstaclePercent: 4
   coinPercent: 5
   powerupPercent: 1
+  physicalobstaclePercent: 4
 --- !u!1001 &1160313246
 PrefabInstance:
   m_ObjectHideFlags: 0
