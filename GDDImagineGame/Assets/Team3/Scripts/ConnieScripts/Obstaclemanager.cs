@@ -21,10 +21,10 @@ public class Obstaclemanager : MonoBehaviour
         switch (size)
         {
             case 1:
-                obstacle.transform.localScale = new Vector3(5, 1, 1); //fence
+                obstacle.transform.localScale = new Vector3(15, 1, 1); //fence
                 break;
             case 2:
-                obstacle.transform.localScale = new Vector3(1, 10, 1); //tree
+                obstacle.transform.localScale = new Vector3(2, 18, 2); //tree
                 break;
         }
     }

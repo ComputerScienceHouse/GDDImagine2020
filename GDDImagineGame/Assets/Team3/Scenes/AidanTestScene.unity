@@ -197,6 +197,11 @@ PrefabInstance:
       propertyPath: controller
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8497148591642208873, guid: e9babb6eed4c47f4ca0fe1f239793a5a,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9babb6eed4c47f4ca0fe1f239793a5a, type: 3}
 --- !u!1 &275271379 stripped
@@ -536,6 +541,11 @@ PrefabInstance:
       propertyPath: controller
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8497148591642208873, guid: e9babb6eed4c47f4ca0fe1f239793a5a,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9babb6eed4c47f4ca0fe1f239793a5a, type: 3}
 --- !u!1 &939677321 stripped
@@ -777,6 +787,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497148591642208873, guid: e9babb6eed4c47f4ca0fe1f239793a5a,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9babb6eed4c47f4ca0fe1f239793a5a, type: 3}
@@ -1381,6 +1396,11 @@ PrefabInstance:
         type: 3}
       propertyPath: controller
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497148591642208873, guid: e9babb6eed4c47f4ca0fe1f239793a5a,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9babb6eed4c47f4ca0fe1f239793a5a, type: 3}

@@ -67,52 +67,57 @@ public class Movement : MonoBehaviour
     }
     void Update()
     {
-        if (!isFalling && IsGrounded())
-        {
-            rb.AddForce(new Vector3(0, Input.GetAxis("Player" + controller + "-A") * 50 * rb.mass,0));
-        }
 
-        if(rb.velocity.y >= maxJumpVelocity && !isFalling)
+        if (!(this.GetComponent<Transform>().position.z > 50.0f))
         {
-            this.isFalling = true;
-            rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * (speedMultiplier / 2) * speedBoostMultiplier,
-                rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * (speedMultiplier / 2) * speedBoostMultiplier);
-
-        }
-        else if(rb.velocity.y == 0)
-        {
-            isFalling = false;
-            rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * speedMultiplier * speedBoostMultiplier,
-                rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * speedMultiplier * speedBoostMultiplier);
-        }
-
-        //cease movement if no input
-        if (Input.GetAxis("Player" + controller + "-LeftJoy-Y") == 0)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
-        }
-
-        if (Input.GetAxis("Player" + controller + "-LeftJoy-X") == 0)
-        {
-            rb.velocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
-        }
-
-        if (Input.GetAxis("Player" + controller + "-B") == 1)
-        {
-            switch (type)
+            if (!isFalling && IsGrounded())
             {
-                case PlayerType.Dragon:
-                    break;
-                case PlayerType.Knight:
-                    gameObject.GetComponent<Renderer>().enabled = false;
-                    gameObject.GetComponent<Collider>().enabled = false;
-                    break;
-                case PlayerType.Witch:
-                    break;
-                case PlayerType.Wizard:
-                    break;
+                rb.AddForce(new Vector3(0, Input.GetAxis("Player" + controller + "-A") * 50 * rb.mass, 0));
+            }
+
+            if (rb.velocity.y >= maxJumpVelocity && !isFalling)
+            {
+                this.isFalling = true;
+                rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * (speedMultiplier / 2) * speedBoostMultiplier,
+                    rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * (speedMultiplier / 2) * speedBoostMultiplier);
+
+            }
+            else if (rb.velocity.y == 0)
+            {
+                isFalling = false;
+                rb.velocity = new Vector3(Input.GetAxis("Player" + controller + "-LeftJoy-X") * speedMultiplier * speedBoostMultiplier,
+                    rb.velocity.y, Input.GetAxis("Player" + controller + "-LeftJoy-Y") * speedMultiplier * speedBoostMultiplier);
+            }
+
+            //cease movement if no input
+            if (Input.GetAxis("Player" + controller + "-LeftJoy-Y") == 0)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
+            }
+
+            if (Input.GetAxis("Player" + controller + "-LeftJoy-X") == 0)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
+            }
+
+            if (Input.GetAxis("Player" + controller + "-B") == 1)
+            {
+                switch (type)
+                {
+                    case PlayerType.Dragon:
+                        break;
+                    case PlayerType.Knight:
+                        gameObject.GetComponent<Renderer>().enabled = false;
+                        gameObject.GetComponent<Collider>().enabled = false;
+                        break;
+                    case PlayerType.Witch:
+                        break;
+                    case PlayerType.Wizard:
+                        break;
+                }
             }
         }
+        else rb.velocity = Vector3.zero;
     }
 
     /// <summary>

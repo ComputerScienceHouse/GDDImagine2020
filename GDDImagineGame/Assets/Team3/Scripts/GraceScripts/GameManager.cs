@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject cam;
     public Canvas can;
 
-    float camSpeed = 2f;
+    float camSpeed = 10f;
 
 
     // Start is called before the first frame update

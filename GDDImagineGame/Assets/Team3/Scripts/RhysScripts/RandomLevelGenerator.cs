@@ -117,16 +117,6 @@ public class RandomLevelGenerator : MonoBehaviour
                                 0.5f,
                                 h + lengthStart + (h * lengthSpread)),
                             Quaternion.identity);
-                        int size = Random.Range(1, 3);
-                        switch (size)
-                        {
-                            case 1:
-                                physicalobstaclePrefab.transform.localScale = new Vector3(3, 1, 1);
-                                break;
-                            case 2:
-                                physicalobstaclePrefab.transform.localScale = new Vector3(1, 10, 1);
-                                break;
-                        }
                         break;
 				}
 			}
